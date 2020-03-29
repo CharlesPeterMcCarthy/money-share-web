@@ -1,91 +1,122 @@
 {
-  "extends": "tslint:recommended",
+  "extends": "tslint:all",
   "rules": {
-    "array-type": false,
-    "arrow-parens": false,
-    "deprecation": {
-      "severity": "warning"
-    },
-    "component-class-suffix": true,
-    "contextual-lifecycle": true,
-    "directive-class-suffix": true,
-    "directive-selector": [
-      true,
-      "attribute",
-      "app",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "app",
-      "kebab-case"
-    ],
-    "import-blacklist": [
-      true,
-      "rxjs/Rx"
-    ],
-    "interface-name": false,
-    "max-classes-per-file": false,
+    "import-spacing": true,
     "max-line-length": [
       true,
       140
     ],
-    "member-access": false,
-    "member-ordering": [
+    "triple-equals": [
       true,
-      {
-        "order": [
-          "static-field",
-          "instance-field",
-          "static-method",
-          "instance-method"
-        ]
-      }
+      "allow-null-check"
     ],
-    "no-consecutive-blank-lines": false,
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
-    "no-empty": false,
-    "no-inferrable-types": [
-      true,
-      "ignore-params"
-    ],
-    "no-non-null-assertion": true,
-    "no-redundant-jsdoc": true,
-    "no-switch-case-fall-through": true,
-    "no-var-requires": false,
-    "object-literal-key-quotes": [
-      true,
-      "as-needed"
-    ],
-    "object-literal-sort-keys": false,
-    "ordered-imports": false,
     "quotemark": [
       true,
       "single"
     ],
-    "trailing-comma": false,
-    "no-conflicting-lifecycle": true,
-    "no-host-metadata-property": true,
-    "no-input-rename": true,
-    "no-inputs-metadata-property": true,
-    "no-output-native": true,
-    "no-output-on-prefix": true,
-    "no-output-rename": true,
-    "no-outputs-metadata-property": true,
-    "template-banana-in-box": true,
-    "template-no-negated-async": true,
-    "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
-  },
-  "rulesDirectory": [
-    "codelyzer"
-  ]
+    "semicolon": [
+      true,
+      "always",
+      "ignore-interfaces"
+    ],
+    "indent": [
+      true,
+      "tabs",
+      4
+    ],
+    "no-any": false,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-rest-spread",
+      "check-type",
+      "check-module",
+      "check-type-operator",
+      "check-preblock",
+      "check-postbrace"
+    ],
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "no-consecutive-blank-lines": true,
+    "trailing-comma": [
+      true,
+      {
+        "singleline": "never",
+        "multiline": {
+          "objects": "never",
+          "arrays": "never",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        }
+      }
+    ],
+    "await-promise": [
+      true,
+      "RequestPromise"
+    ],
+    "completed-docs": false,
+    "file-name-casing": false,
+    "interface-name": false,
+    "linebreak-style": false,
+    "newline-before-return": false,
+    "newline-per-chained-call": false,
+    "no-angle-bracket-type-assertion": false,
+    "no-implicit-dependencies": false,
+    "no-inferrable-types": false,
+    "no-object-literal-type-assertion": false,
+    "no-parameter-properties": false,
+    "no-unnecessary-class": ["allow-static-only"],
+    "no-use-before-declare": false,
+    "no-void-expression": false,
+    "only-arrow-functions": false,
+    "ordered-imports": false,
+    "prefer-template": [
+      true,
+      "allow-single-concat"
+    ],
+    "promise-function-async": false,
+    "restrict-plus-operands": false,
+    "strict-boolean-expressions": false,
+    "variable-name": false,
+    "max-classes-per-file": false,
+    "no-default-import": false,
+    "no-default-export": false,
+    "no-submodule-imports": false,
+    "object-literal-sort-keys": false,
+    "no-empty-interface": false,
+    "member-ordering": false,
+    "interface-over-type-literal": false,
+    "curly": false,
+    "no-unused-expression": false,
+    "arrow-return-shorthand": false,
+    "no-shadowed-variable": false,
+    "no-console": false,
+    "no-null-keyword": false,
+    "prefer-function-over-method": false,
+    "no-magic-numbers": false,
+    "no-require-imports": false,
+    "class-name": false,
+    "no-return-await": false,
+    "align": false,
+    "no-import-side-effect": [
+      true,
+      {
+        "ignore-module": "(react-native|\\.html|\\.css)$"
+      }
+    ],
+    "typedef": [
+      true,
+      "call-signature",
+      "arrow-call-signature",
+      "parameter",
+      "arrow-parameter",
+      "property-declaration",
+      "member-variable-declaration"
+    ]
+  }
 }
