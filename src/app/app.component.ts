@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faBars, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  public title: string = 'MoneyShare';
+  public navIcon: IconDefinition = faBars;
+  public closeNavIcon: IconDefinition = faTimes;
 
 }

@@ -1,16 +1,17 @@
 <mat-drawer-container class="app-container" autosize>
   <mat-drawer #drawer class="sidenav" mode="side">
-    <p>Sidenav</p>
+    <div class="brand-name">
+      <span>Money Share</span>
+    </div>
+    <navigation></navigation>
   </mat-drawer>
 
   <div class="header">
-    <span>Header</span>
+    <fa-icon [icon]="navIcon" class="nav-icon" (click)="drawer.toggle()" *ngIf="!drawer.opened"></fa-icon>
+    <fa-icon [icon]="closeNavIcon" class="nav-icon" (click)="drawer.toggle()" *ngIf="drawer.opened"></fa-icon>
   </div>
 
   <div class="content">
     <router-outlet></router-outlet>
-    <button type="button" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
   </div>
 </mat-drawer-container>

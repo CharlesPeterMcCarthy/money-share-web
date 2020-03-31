@@ -1,10 +1,17 @@
+@import '../theme.styl'
+
 .app-container
   height 100%
 
   .header
     border-bottom 1px solid rgba(0, 0, 0, 0.12)
     padding 10px
-    background-color white
+    background-color primary
+
+    .nav-icon
+      font-size: 22px
+      cursor pointer
+      color white
 
   .content
     height 100%
@@ -13,3 +20,13 @@
   .sidenav
     padding 20px
     width: 200px
+    background-color primary
+
+    .brand-name
+      position relative
+      top 0
+      padding 10px
+      font-weight 600
+      font-size 22px
+      margin-bottom 20px
+      color white

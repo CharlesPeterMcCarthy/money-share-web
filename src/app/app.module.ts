@@ -4,12 +4,20 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { SignUpComponent } from './pages/signup/signup.component';
+import { NOTYF, notyfFactory } from './utils/notyf.token';
+import { NavLinkComponent } from './components/navigation/nav-link/nav-link.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @NgModule({
 	declarations: [
-	  AppComponent
+	  AppComponent,
+    SignUpComponent,
+    NavLinkComponent,
+    NavigationComponent
 	],
 	exports: [
 		MatSidenavModule
@@ -18,9 +26,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
   	BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    FontAwesomeModule
 	],
-	providers: [],
+	providers: [
+    {
+      provide: NOTYF,
+      useFactory: notyfFactory
+    }
+  ],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
