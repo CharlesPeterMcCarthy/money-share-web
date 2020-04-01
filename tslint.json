@@ -21,8 +21,8 @@
     ],
     "indent": [
       true,
-      "tabs",
-      4
+      "spaces",
+      2
     ],
     "no-any": false,
     "whitespace": [
