@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   public async ngOnInit(): Promise<void> {
-    this._title.setTitle('Money Share');
+    this._title.setTitle('MoneyShare');
     await this.auth.checkUserAuthenticated();
   }
 

@@ -1,0 +1,93 @@
+<page-heading title="Sign Up" *ngIf="!signUpComplete"></page-heading>
+
+<form *ngIf="!signUpComplete" [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="row">
+  <div class="form-group col-12 offset-md-3 col-md-6">
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input formControlName="firstName" matInput>
+    </mat-form-field>
+
+    <mat-error *ngIf="firstName.invalid && firstName.touched">
+      You must enter a first name
+    </mat-error>
+  </div>
+
+  <div class="form-group col-12 offset-md-3 col-md-6">
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input formControlName="lastName" matInput>
+    </mat-form-field>
+
+    <mat-error *ngIf="lastName.invalid && lastName.touched">
+      You must enter a last name
+    </mat-error>
+  </div>
+
+  <div class="form-group col-12 offset-md-3 col-md-6">
+    <mat-form-field>
+      <mat-label>Email Address</mat-label>
+      <input formControlName="email" type="email" matInput>
+    </mat-form-field>
+
+    <mat-error *ngIf="email.invalid && email.touched">
+      You must enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="email.errors && email.errors.InvalidEmailException">
+      The email address you have entered is invalid
+    </mat-error>
+    <mat-error *ngIf="email.errors && email.errors.InvalidUsernameException">
+      An account with that email already exists
+    </mat-error>
+  </div>
+
+  <div class="form-group col-12 offset-md-3 col-md-6">
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input formControlName="password" type="password" matInput>
+    </mat-form-field>
+
+    <mat-error *ngIf="password.invalid && password.touched && !password.value">
+      You must enter a password
+    </mat-error>
+    <mat-error *ngIf="password.errors && password.errors.InvalidPasswordException">
+      The password you have entered is invalid
+    </mat-error>
+
+    <div *ngIf="password.errors && password.errors.InvalidPasswordException" class="move-down">
+      <span>Passwords must contain:</span>
+      <ul>
+        <li>Lowercase letters</li>
+        <li>Uppercase letters</li>
+        <li>Numbers</li>
+        <li>Special characters</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group col-12 offset-md-3 col-md-6">
+    <mat-form-field>
+      <mat-label>Confirm Password</mat-label>
+      <input formControlName="confirmPassword" type="password" matInput>
+    </mat-form-field>
+
+    <mat-error *ngIf="confirmPassword.touched && password.touched && confirmPassword.errors && confirmPassword.errors.PasswordMismatch">
+      Passwords do not match
+    </mat-error>
+  </div>
+
+  <div class="text-right col-12 offset-md-3 col-md-6">
+    <button color="accent" [disabled]="signUpForm.invalid" mat-flat-button>Sign Up <fa-icon [icon]="signUpIcon"></fa-icon></button>
+  </div>
+</form>
+
+<div class="signup-complete-panel" *ngIf="signUpComplete">
+  <fa-icon [icon]="signUpCompleteIcon" class="signup-complete-icon"></fa-icon>
+  <h1 class="page-heading">You have successfully signed up for MoneyShare!</h1>
+  <p>Please check your email and following the link to confirm your account.</p>
+  <div>
+    <img src="../../../assets/svg/email-sent.svg">
+  </div>
+  <button color="accent" routerLink="/login" mat-button>Go to Login</button>
+</div>
+
+<spinner [text]="'Signing Up...'" name="spinner"></spinner>
