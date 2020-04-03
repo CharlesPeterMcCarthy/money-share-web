@@ -2,7 +2,7 @@
 
 <form *ngIf="!signUpComplete" [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="row">
   <div class="form-group col-12 offset-md-3 col-md-6">
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <mat-label>First Name</mat-label>
       <input formControlName="firstName" matInput>
     </mat-form-field>
@@ -13,7 +13,7 @@
   </div>
 
   <div class="form-group col-12 offset-md-3 col-md-6">
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <mat-label>Last Name</mat-label>
       <input formControlName="lastName" matInput>
     </mat-form-field>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="form-group col-12 offset-md-3 col-md-6">
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <mat-label>Email Address</mat-label>
       <input formControlName="email" type="email" matInput>
     </mat-form-field>
@@ -41,7 +41,7 @@
   </div>
 
   <div class="form-group col-12 offset-md-3 col-md-6">
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <mat-label>Password</mat-label>
       <input formControlName="password" type="password" matInput>
     </mat-form-field>
@@ -65,7 +65,7 @@
   </div>
 
   <div class="form-group col-12 offset-md-3 col-md-6">
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <mat-label>Confirm Password</mat-label>
       <input formControlName="confirmPassword" type="password" matInput>
     </mat-form-field>
@@ -76,7 +76,7 @@
   </div>
 
   <div class="text-right col-12 offset-md-3 col-md-6">
-    <button color="accent" [disabled]="signUpForm.invalid" mat-flat-button>Sign Up <fa-icon [icon]="signUpIcon"></fa-icon></button>
+    <button color="accent" [disabled]="signUpForm.invalid" class="full-width submit" mat-flat-button>Sign Up <fa-icon [icon]="signUpIcon"></fa-icon></button>
   </div>
 </form>
 

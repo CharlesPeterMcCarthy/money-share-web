@@ -107,4 +107,14 @@ export class AuthService {
     }
   }
 
+  public login = async (email: string, password: string): Promise<CustomResponse> => {
+    try {
+      await this.Auth.signIn(email, password);
+      return { success: true };
+    } catch (e) {
+      return { error: e, success: false };
+    }
+  }
+
+
 }

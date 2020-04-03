@@ -1,0 +1,40 @@
+<page-heading title="Login"></page-heading>
+
+<form [formGroup]="loginForm" class="login-form content-panel">
+  <div class="form-group col-12 offset-md-3 col-md-6">
+    <mat-form-field class="full-width">
+      <mat-label>Email Address</mat-label>
+      <input type="email" formControlName="email" matInput>
+    </mat-form-field>
+
+    <mat-error *ngIf="email.invalid && email.touched && !email.errors.UserNotFoundException && !email.errors.UserNotConfirmedException">
+      You must enter an email address
+    </mat-error>
+    <mat-error *ngIf="email.errors && email.errors.UserNotFoundException">
+      The email address you entered does not match any accounts in our system
+    </mat-error>
+    <mat-error *ngIf="email.errors && email.errors.UserNotConfirmedException">
+      You have not confirmed your account yet - Please check your email
+    </mat-error>
+  </div>
+
+  <div class="form-group col-12 offset-md-3 col-md-6">
+    <mat-form-field class="full-width">
+      <mat-label>Password</mat-label>
+      <input type="password" formControlName="password" matInput>
+    </mat-form-field>
+
+    <mat-error *ngIf="password.invalid && password.touched && !password.errors.NotAuthorizedException">
+      Password must enter your password
+    </mat-error>
+    <mat-error *ngIf="password.errors && password.errors.NotAuthorizedException">
+      The password you entered is incorrect
+    </mat-error>
+  </div>
+
+  <div class="form-group text-right col-12 offset-md-3 col-md-6">
+    <button [disabled]="loginForm.invalid" (click)="login()" class="full-width submit" color="accent" mat-flat-button>Login <fa-icon [icon]="loginIcon"></fa-icon></button>
+  </div>
+</form>
+
+<spinner [text]="'Logging In...'" name="spinner"></spinner>

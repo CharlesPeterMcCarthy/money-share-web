@@ -54,7 +54,7 @@ export class ConfirmEmailComponent implements OnInit {
       this.isConfirmed = true;
       this.isConfirming = false;
       this._notyf.success('You have successfully confirmed your account');
-      await this._router.navigateByUrl('login', { state: { username: this.email } });
+      await this._router.navigateByUrl('login', { state: { email: this.email } });
     } else {
       this.isConfirming = false;
       this.handleError(res.error);

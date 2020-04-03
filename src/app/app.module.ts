@@ -21,6 +21,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AmplifyAngularModule, AmplifyModules, AmplifyService } from 'aws-amplify-angular';
 import { Auth } from 'aws-amplify';
 import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.compo
     NavigationComponent,
     PageHeadingComponent,
     SpinnerComponent,
-    ConfirmEmailComponent
+    ConfirmEmailComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
