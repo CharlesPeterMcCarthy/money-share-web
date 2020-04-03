@@ -1,0 +1,59 @@
+<page-heading title="Confirming Email" *ngIf="!isConfirmed && !error && !requestedCode"></page-heading>
+<page-heading title="Email Confirmed" *ngIf="!error && !isConfirmed && !isConfirming"></page-heading>
+<page-heading title="Unable To Confirm Email" *ngIf="error && !requestedCode"></page-heading>
+<page-heading title="Check Your Email" *ngIf="requestedCode"></page-heading>
+
+<div *ngIf="!requestedCode" class="content-panel">
+  <div *ngIf="isConfirmed" class="text-center">
+    <img src="../../../assets/svg/email-confirmed.svg">
+    <p>
+      <strong>Your email address has been successfully confirmed.</strong>
+    </p>
+  </div>
+
+  <div *ngIf="error && !isConfirmed" class="text-center">
+    <div *ngIf="error">
+      <img src="../../../assets/svg/email-error.svg">
+    </div>
+
+    <div *ngIf="error === 'CodeMismatchException'">
+      <p class="error">
+        The confirmation code supplied is incorrect.
+        Please check your email and click on the link supplied.
+      </p>
+      <p>If this issues persists, you can request a new confirmation link.</p>
+      <p>It is also possible that you have already confirmed your account. You can attempt to login.</p>
+
+      <button (click)="requestNewCode()" color="accent" class="btn-gap" mat-stroked-button>Request New Code</button>
+      <button routerLink="/login" color="accent" mat-stroked-button>Go To Login</button>
+    </div>
+
+    <div *ngIf="error === 'NotAuthorizedException'" class="text-center">
+      <p class="error">This account has already been confirmed.</p>
+
+      <button routerLink="/login" color="accent" mat-stroked-button>Go To Login</button>
+    </div>
+
+    <div *ngIf="error === 'ExpiredCodeException'" class="text-center">
+      <p class="error">The confirmation code you entered has expired.</p>
+      <p>Please request a new one.</p>
+
+      <button (click)="requestNewCode()" color="accent" mat-stroked-button>Request New Code</button>
+    </div>
+
+    <div *ngIf="error === 'LimitExceededException'" class="text-center">
+      <p class="error">You have exceeded the limit on attempts to confirm your email address.</p>
+      <p>Try again in a little while.</p>
+    </div>
+  </div>
+</div>
+
+<div class="content-panel text-center" *ngIf="requestedCode">
+  <img src="../../../assets/svg/email-sent.svg">
+  <p>
+    <strong>A new confirmation link has been sent to your email.</strong>
+  </p>
+</div>
+
+<spinner [text]="'Confirming...'" [name]="'confirming'"></spinner>
+<spinner [text]="'Requesting Code...'" [name]="'requesting'"></spinner>

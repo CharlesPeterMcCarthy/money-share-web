@@ -97,4 +97,14 @@ export class AuthService {
 
     return res;
   }
+
+  public confirmSignUp = async (email: string, code: string): Promise<CustomResponse> => {
+    try {
+      await this.Auth.confirmSignUp(email, code);
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: e };
+    }
+  }
+
 }
