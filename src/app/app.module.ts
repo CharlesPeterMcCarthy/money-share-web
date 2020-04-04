@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgxsModule } from '@ngxs/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { AmplifyAngularModule, AmplifyModules, AmplifyService } from 'aws-amplif
 import { Auth } from 'aws-amplify';
 import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
 import { LoginComponent } from './pages/login/login.component';
+import { LoginState, SignUpState } from './ngxs/states';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { LoginComponent } from './pages/login/login.component';
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxsModule.forRoot([ LoginState, SignUpState ])
   ],
   providers: [
     {

@@ -6,6 +6,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { faUserPlus, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Title } from '@angular/platform-browser';
 import { AuthService, CustomAuthError, SignUpData } from '../../services/auth/auth.service';
+import { Select, Store } from '@ngxs/store';
+import { LoginStateModel, SignUpState, SignUpStateModel } from '../../ngxs/states';
+import { Observable } from 'rxjs';
+import { AttemptSignUp } from '../../ngxs/actions';
+import { withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -13,6 +18,8 @@ import { AuthService, CustomAuthError, SignUpData } from '../../services/auth/au
   styleUrls: ['./signup.component.styl']
 })
 export class SignUpComponent implements OnInit {
+
+  @Select(SignUpState) public signUpState$: Observable<any>;
 
   public signUpForm: FormGroup;
   public signUpComplete: boolean = false;
@@ -27,7 +34,8 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private _spinner: NgxSpinnerService,
     private _title: Title,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _store: Store
   ) {
     this._title.setTitle('Sign Up | MoneyShare');
   }
@@ -70,12 +78,15 @@ export class SignUpComponent implements OnInit {
       return this._notyf.error(e.message);
     }
 
-    const res = await this._auth.signUp(signUpData);
+    this._store
+      .dispatch(new AttemptSignUp(signUpData))
+      .pipe(withLatestFrom(this.signUpState$))
+      .subscribe(async ([ _, signUp ]: SignUpStateModel[]) => {
+        if (signUp.isSignedUp) this.signUpComplete = true;
+        else if (signUp.error) this.handleError(signUp.error);
 
-    if (res.success) this.signUpComplete = true;
-    else this.handleError(res.error);
-
-    await this._spinner.hide('spinner');
+        await this._spinner.hide('spinner');
+      });
   }
 
   private _validateSignUpData = (signUpData: SignUpData): void => {

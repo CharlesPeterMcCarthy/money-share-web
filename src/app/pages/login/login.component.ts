@@ -1,13 +1,18 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { AuthService, CustomAuthError, CustomResponse } from 'src/app/services/auth/auth.service';
+import { AuthService, CustomAuthError } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { NOTYF } from '../../utils/notyf.token';
 import { Notyf } from 'notyf';
 import { faSignInAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Title } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Select, Store } from '@ngxs/store';
+import { AttemptLogin } from '../../ngxs/actions';
+import { Observable } from 'rxjs';
+import { LoginState, LoginStateModel } from '../../ngxs/states';
+import { withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +20,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./login.component.styl']
 })
 export class LoginComponent implements OnInit {
+
+  @Select(LoginState) public loginState$: Observable<any>;
 
   public loginForm: FormGroup;
   public loginIcon: IconDefinition = faSignInAlt;
@@ -34,6 +41,7 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _location: Location,
     private _spinner: NgxSpinnerService,
+    private _store: Store,
     @Inject(NOTYF) private _notyf: Notyf
   ) {
     this._title.setTitle('Login | MoneyShare');
@@ -58,19 +66,21 @@ export class LoginComponent implements OnInit {
   public login = async (): Promise<void> => {
     await this._spinner.show('spinner');
 
-    const res: CustomResponse = await this._auth.login(this.email.value.trim(), this.password.value.trim());
-    if (res.success) await this._router.navigate([ '/' ]); // Update when dashboard is created
-    else this.handleError(res.error);
+    this._store
+      .dispatch(new AttemptLogin(this.email.value.trim(), this.password.value.trim()))
+      .pipe(withLatestFrom(this.loginState$))
+      .subscribe(async ([ _, login ]: LoginStateModel[]) => {
+        if (login.isLoggedIn) await this._router.navigate([ '/' ]); // Update when dashboard is created
+        else if (login.error) this.handleError(login.error);
 
-    await this._spinner.hide('spinner');
+        await this._spinner.hide('spinner');
+      });
   }
 
   private handleError = (err: CustomAuthError): void => {
     if (this.isEmailError(err.code)) this.email.setErrors({ [err.code]: true });
     else if (this.isPasswordError(err.code)) this.password.setErrors({ [err.code]: true });
     else this._notyf.error('An unknown error has occurred');
-
-    console.log(this.email.errors);
   }
 
 }
