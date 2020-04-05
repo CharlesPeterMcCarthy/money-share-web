@@ -10,6 +10,7 @@ import { withLatestFrom } from 'rxjs/operators';
 import { ConfirmEmailState, ConfirmEmailStateModel } from '../../ngxs/states';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-confirm-email',
@@ -42,7 +43,7 @@ export class ConfirmEmailComponent implements OnInit {
     private _store: Store,
     @Inject(NOTYF) private _notyf: Notyf
   ) {
-    this._title.setTitle('Confirm Email | MoneyShare');
+    this._title.setTitle(`Confirm Email | ${environment.brand}`);
     this.confirmationCode = this._route.snapshot.paramMap.get('code');
     this.email = this._route.snapshot.paramMap.get('email');
   }

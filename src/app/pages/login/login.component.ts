@@ -13,6 +13,7 @@ import { AttemptLogin } from '../../ngxs/actions';
 import { Observable } from 'rxjs';
 import { LoginState, LoginStateModel } from '../../ngxs/states';
 import { withLatestFrom } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
     private _store: Store,
     @Inject(NOTYF) private _notyf: Notyf
   ) {
-    this._title.setTitle('Login | MoneyShare');
+    this._title.setTitle(`Login | ${environment.brand}`);
   }
 
   public ngOnInit(): void {

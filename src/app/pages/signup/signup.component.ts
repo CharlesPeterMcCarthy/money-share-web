@@ -7,10 +7,11 @@ import { faUserPlus, faCheck, IconDefinition } from '@fortawesome/free-solid-svg
 import { Title } from '@angular/platform-browser';
 import { AuthService, CustomAuthError, SignUpData } from '../../services/auth/auth.service';
 import { Select, Store } from '@ngxs/store';
-import { LoginStateModel, SignUpState, SignUpStateModel } from '../../ngxs/states';
+import { SignUpState, SignUpStateModel } from '../../ngxs/states';
 import { Observable } from 'rxjs';
 import { AttemptSignUp } from '../../ngxs/actions';
 import { withLatestFrom } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -37,7 +38,7 @@ export class SignUpComponent implements OnInit {
     private _auth: AuthService,
     private _store: Store
   ) {
-    this._title.setTitle('Sign Up | MoneyShare');
+    this._title.setTitle(`Sign Up | ${environment.brand}`);
   }
 
   public ngOnInit(): void {

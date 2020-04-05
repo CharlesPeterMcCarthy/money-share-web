@@ -1,7 +1,7 @@
 <mat-drawer-container class="app-container" autosize>
   <mat-drawer #drawer class="sidenav" mode="side">
     <div class="brand-name">
-      <span>Money Share</span>
+      <span>{{ brandName }}</span>
     </div>
     <navigation></navigation>
   </mat-drawer>
@@ -9,6 +9,7 @@
   <div class="header">
     <fa-icon [icon]="navIcon" class="nav-icon" (click)="drawer.toggle()" *ngIf="!drawer.opened"></fa-icon>
     <fa-icon [icon]="closeNavIcon" class="nav-icon" (click)="drawer.toggle()" *ngIf="drawer.opened"></fa-icon>
+    <fa-icon [icon]="signOutIcon" class="nav-icon logout" (click)="signOut()" *ngIf="isLoggedIn()"></fa-icon>
   </div>
 
   <div class="content container">

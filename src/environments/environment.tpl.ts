@@ -5,6 +5,7 @@
 
 export const environment = {
   production: true,
+  brand: '{{ BRAND_NAME }}',
   cognitoConfig: {
     identityPoolId: '{{ IDENTITY_POOL_ID }}',
     region: '{{ REGION }}',

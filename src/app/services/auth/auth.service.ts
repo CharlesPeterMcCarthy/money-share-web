@@ -40,12 +40,14 @@ export class AuthService {
   ) {
     this._amplifyService.authStateChange$ // Listening for auth state changes
       .subscribe((authState: AuthState) => {
-
         console.log(authState);
-          // if (authState.user) this.user = authState.user;
-          // this.setLoggedInState(authState.state === 'signedIn' && authState.user);
-        }
-      );
+        this.setLoggedInState(authState.state === 'signedIn' && authState.user);
+      });
+  }
+
+  private setLoggedInState = (loggedIn: boolean): void => {
+    if (loggedIn) localStorage.setItem('isLoggedIn', 'true');
+    else localStorage.clear();
   }
 
   public checkUserAuthenticated = async (): Promise<void> => { // Called when the app first loads
@@ -53,13 +55,13 @@ export class AuthService {
       await this.Auth.currentAuthenticatedUser({ bypassCache: true }); // Let state change listener handle user object
     } catch (e) { // User is invalid / not authenticated
       if (this.isLoggedIn()) this.notyf.error('You have been logged out');
-      this.logout();
+      this.signOut();
     }
   }
 
   public isLoggedIn = (): boolean => !!localStorage.getItem('isLoggedIn');
 
-  public logout = async (): Promise<void> => await this.Auth.signOut();
+  public signOut = async (): Promise<void> => await this.Auth.signOut();
 
   public signUp = async ({ firstName, lastName, email, password }:
     { firstName: string; lastName: string; email: string; password: string }): Promise<CustomResponse> => {
@@ -115,6 +117,5 @@ export class AuthService {
       return { error: e, success: false };
     }
   }
-
 
 }
