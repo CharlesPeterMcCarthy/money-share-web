@@ -23,7 +23,7 @@ import { AmplifyAngularModule, AmplifyModules, AmplifyService } from 'aws-amplif
 import { Auth } from 'aws-amplify';
 import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
 import { LoginComponent } from './pages/login/login.component';
-import { LoginState, SignUpState } from './ngxs/states';
+import { LoginState, SignUpState, ConfirmEmailState } from './ngxs/states';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { LoginState, SignUpState } from './ngxs/states';
     ReactiveFormsModule,
     FormsModule,
     NgxSpinnerModule,
-    NgxsModule.forRoot([ LoginState, SignUpState ])
+    NgxsModule.forRoot([ LoginState, SignUpState, ConfirmEmailState ])
   ],
   providers: [
     {

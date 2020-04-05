@@ -21,7 +21,7 @@ export class LoginState {
   public constructor(private _auth: AuthService) { }
 
   @Action(AttemptLogin)
-  public async addAnimal(ctx: StateContext<LoginStateModel>, action: AttemptLogin): Promise<void> {
+  public async attemptLogin(ctx: StateContext<LoginStateModel>, action: AttemptLogin): Promise<void> {
     const state = ctx.getState();
     const res: CustomResponse = await this._auth.login(action.email, action.password);
 

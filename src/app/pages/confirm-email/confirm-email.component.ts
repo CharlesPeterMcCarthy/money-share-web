@@ -5,6 +5,11 @@ import { AuthService, CustomAuthError, CustomResponse } from '../../services/aut
 import { NOTYF } from '../../utils/notyf.token';
 import { Notyf } from 'notyf';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmEmail } from '../../ngxs/actions';
+import { withLatestFrom } from 'rxjs/operators';
+import { ConfirmEmailState, ConfirmEmailStateModel } from '../../ngxs/states';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-confirm-email',
@@ -12,6 +17,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./confirm-email.component.styl']
 })
 export class ConfirmEmailComponent implements OnInit {
+
+  @Select(ConfirmEmailState) public confirmEmailState$: Observable<any>;
 
   private readonly confirmationCode: string;
   private readonly email: string;
@@ -32,6 +39,7 @@ export class ConfirmEmailComponent implements OnInit {
     private _router: Router,
     private _authService: AuthService,
     private _spinner: NgxSpinnerService,
+    private _store: Store,
     @Inject(NOTYF) private _notyf: Notyf
   ) {
     this._title.setTitle('Confirm Email | MoneyShare');
@@ -40,31 +48,36 @@ export class ConfirmEmailComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    await this.CheckConfirmationCode();
+    await this.checkConfirmationCode();
   }
 
   private isKnownError = (code: string): boolean => this.knownErrorTypes.indexOf(code) > -1;
 
-  private CheckConfirmationCode = async (): Promise<void> => {
+  private checkConfirmationCode = async (): Promise<void> => {
     this.isConfirming = true;
     await this._spinner.show('confirming');
-    const res: CustomResponse = await this._authService.confirmSignUp(this.email, this.confirmationCode);
 
-    if (res.success) {
-      this.isConfirmed = true;
-      this.isConfirming = false;
-      this._notyf.success('You have successfully confirmed your account');
-      await this._router.navigateByUrl('login', { state: { email: this.email } });
-    } else {
-      this.isConfirming = false;
-      this.handleError(res.error);
-    }
+    this._store
+      .dispatch(new ConfirmEmail(this.email, this.confirmationCode))
+      .pipe(withLatestFrom(this.confirmEmailState$))
+      .subscribe(async ([ _, confirmEmail ]: ConfirmEmailStateModel[]) => {
+        if (confirmEmail.isConfirmed) {
+          this.isConfirmed = true;
+          this.isConfirming = false;
+          this._notyf.success('You have successfully confirmed your account');
+          await this._router.navigateByUrl('login', { state: { email: this.email } });
+        } else if (confirmEmail.error) {
+          this.isConfirming = false;
+          this.handleError(confirmEmail.error);
+        }
+
+        await this._spinner.hide('spinner');
+      });
 
     await this._spinner.hide('confirming');
   }
 
   private handleError = (err: CustomAuthError): void => {
-    console.log(err);
     if (this.isKnownError(err.code)) this.error = err.code;
     else this._notyf.error('An unknown error has occurred');
   }
