@@ -4,8 +4,8 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import Amplify from 'aws-amplify';
 
-const cognitoConfig = environment.cognitoConfig;
-Amplify.configure(cognitoConfig);
+const awsConfig = environment.awsConfig;
+Amplify.configure(awsConfig);
 
 if (environment.production) {
   enableProdMode();

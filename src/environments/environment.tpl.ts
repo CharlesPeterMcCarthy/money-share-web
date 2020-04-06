@@ -6,10 +6,21 @@
 export const environment = {
   production: true,
   brand: '{{ BRAND_NAME }}',
-  cognitoConfig: {
-    identityPoolId: '{{ IDENTITY_POOL_ID }}',
-    region: '{{ REGION }}',
-    userPoolId: '{{ USER_POOL_ID }}',
-    userPoolWebClientId: '{{ CLIENT_ID }}'
+  awsConfig: {
+    Auth: {
+      identityPoolId: '{{ IDENTITY_POOL_ID }}',
+      region: '{{ REGION }}',
+      userPoolId: '{{ USER_POOL_ID }}',
+      userPoolWebClientId: '{{ CLIENT_ID }}'
+    },
+    API: {
+      endpoints: [
+        {
+          name: '{{ API_NAME }}',
+          endpoint: '{{ API_URL }}',
+          region: '{{ REGION }}'
+        }
+      ]
+    }
   }
 };

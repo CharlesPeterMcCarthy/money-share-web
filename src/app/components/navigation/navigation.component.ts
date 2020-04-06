@@ -10,7 +10,8 @@ export class NavigationComponent {
 
   public navLinks: NavLink[] = [
     { text: 'Login', url: '/login' },
-    { text: 'Sign Up', url: '/search' }
+    { text: 'Sign Up', url: '/search' },
+    { text: 'Dashboard', url: '/dashboard' }
   ];
 
 }
