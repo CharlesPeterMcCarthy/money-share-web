@@ -1,0 +1,34 @@
+<page-heading title="Deposit"></page-heading>
+
+<form [formGroup]="depositForm" *ngIf="!paymentComplete">
+  <div class="form-row">
+    <mat-form-field class="full-width">
+      <mat-label>Deposit Amount</mat-label>
+      <input type="number" id="amount" formControlName="amount" step="0.01" value="10" matInput>
+    </mat-form-field>
+
+    <p class="error-text" *ngIf="amountErrors">{{ amountErrors }}</p>
+  </div>
+
+  <div class="form-row">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
+
+    <p class="error-text" *ngIf="cardErrors">{{ cardErrors }}</p>
+  </div>
+
+  <div class="text-right">
+    <button color="accent" (click)="submit()" mat-flat-button>Deposit Money</button>
+  </div>
+</form>
+
+<div *ngIf="paymentComplete">
+  <p>Your payment has been processed.</p>
+  <p>Your account balance has been updated.</p>
+</div>
+
+<spinner [text]="'Depositing Funds...'" name="spinner"></spinner>

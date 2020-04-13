@@ -6,6 +6,7 @@
 export const environment = {
   production: true,
   brand: '{{ BRAND_NAME }}',
+  stripeAPIKey: '{{ STRIPE_API_KEY }}',
   awsConfig: {
     Auth: {
       identityPoolId: '{{ IDENTITY_POOL_ID }}',

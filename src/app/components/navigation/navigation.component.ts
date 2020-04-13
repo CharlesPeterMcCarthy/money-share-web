@@ -11,7 +11,8 @@ export class NavigationComponent {
   public navLinks: NavLink[] = [
     { text: 'Login', url: '/login' },
     { text: 'Sign Up', url: '/search' },
-    { text: 'Dashboard', url: '/dashboard' }
+    { text: 'Dashboard', url: '/dashboard' },
+    { text: 'Deposit', url: '/deposit' }
   ];
 
 }

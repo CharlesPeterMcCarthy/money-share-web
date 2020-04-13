@@ -47,6 +47,6 @@ export class AppComponent implements OnInit {
 
   public isLoggedIn = (): boolean => this._auth.isLoggedIn();
 
-  public accountBalance = (): number => this.user && this.user.accountBalance || 0;
+  public accountBalance = (): string => ((this.user && this.user.accountBalance || 0) / 100).toFixed(2);
 
 }

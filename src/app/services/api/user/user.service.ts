@@ -14,6 +14,8 @@ export class UserAPIService {
 
   public GetUser = (): Promise<CustomResponse> => API.get(this._api.name, '/users/current', '').catch(this.handleError);
 
+  public UpdateAccountBalance = (clientSecret: string): Promise<CustomResponse> => API.put(this._api.name, '/users/update-balance', { body: { clientSecret } }).catch(this.handleError);
+
   private handleError = (error: any): void => {
     if (!error.response || !error.response.data || !error.response.data) throw { message: 'Unknown Error' };
     throw error.response.data.error || error.response.data.message;

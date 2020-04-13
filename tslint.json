@@ -103,6 +103,7 @@
     "class-name": false,
     "no-return-await": false,
     "align": false,
+    "object-literal-key-quotes": false,
     "no-import-side-effect": [
       true,
       {

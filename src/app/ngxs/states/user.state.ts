@@ -25,6 +25,8 @@ export class UserState {
     const state = ctx.getState();
     const res: CustomResponse | void = await this._userAPI.GetUser();
 
+    console.log(res);
+
     if (res) ctx.setState({
       ...state,
       user: res.success ? res.user : undefined
