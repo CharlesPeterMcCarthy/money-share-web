@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
+import { CustomResponse } from '../../auth/auth.service';
 import { API } from 'aws-amplify';
 import { ApiService } from '../../api.service';
-import { CustomResponse } from '../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserAPIService {
+export class DepositAPIService {
 
   public constructor(
     private _api: ApiService
   ) { }
 
-  public GetUser = (): Promise<CustomResponse> => API.get(this._api.name, '/users/current', '').catch(this.handleError);
+  public BeginDeposit = (amount: number): Promise<CustomResponse> => API.post(this._api.name, `/deposit/${amount}`, '').catch(this.handleError);
+
+  public CompleteDeposit = (clientSecret: string): Promise<CustomResponse> => API.put(this._api.name, '/deposit/complete', { body: { clientSecret } }).catch(this.handleError);
 
   private handleError = (error: any): void => {
     if (!error.response || !error.response.data || !error.response.data) throw { message: 'Unknown Error' };
