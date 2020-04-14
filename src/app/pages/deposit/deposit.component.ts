@@ -4,12 +4,14 @@ import { environment } from '../../../environments/environment';
 import { Select, Store } from '@ngxs/store';
 import { DepositState, DepositStateModel } from '../../ngxs/states';
 import { Observable } from 'rxjs';
-import { CreatePaymentIntent, UpdateBalance } from '../../ngxs/actions';
+import { BeginDeposit, CompleteDeposit, GetUser } from '../../ngxs/actions';
 import { withLatestFrom } from 'rxjs/operators';
 import { NOTYF } from '../../utils/notyf.token';
 import { Notyf } from 'notyf';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-deposit',
@@ -27,6 +29,7 @@ export class DepositComponent implements OnInit {
   public cardErrors: string;
   public amountErrors: string;
   public paymentComplete: boolean = false;
+  public depositCompleteIcon: IconDefinition = faCheck;
 
   public constructor(
     private _store: Store,
@@ -67,6 +70,7 @@ export class DepositComponent implements OnInit {
 
     this.card = elements.create('card', { style });
     this.card.mount('#card-element');
+
     this.card.on('change', (event: StripeCardElementChangeEvent) => {
       this.cardErrors = event.error ? event.error.message : '';
     });
@@ -82,7 +86,7 @@ export class DepositComponent implements OnInit {
     if (amount < 1000 || amount > 50000) return;
 
     this._store
-      .dispatch(new CreatePaymentIntent(amount))
+      .dispatch(new BeginDeposit(amount))
       .pipe(withLatestFrom(this.depositState$))
       .subscribe(([ _, deposit ]: DepositStateModel[]) => {
         this.stripe.confirmCardPayment(deposit.clientSecret, {
@@ -96,19 +100,21 @@ export class DepositComponent implements OnInit {
             this._notyf.error(result.error.message);
             this.cardErrors = result.error.message;
           } else if (result.paymentIntent.status === 'succeeded') {
-            this.updateUserBalance();
+            this.completeDeposit();
           }
         });
       });
   }
 
-  private updateUserBalance = (): void => {
+  private completeDeposit = (): void => {
     this._store
-      .dispatch(new UpdateBalance())
+      .dispatch(new CompleteDeposit())
       .pipe(withLatestFrom(this.depositState$))
       .subscribe(([ _, deposit ]: DepositStateModel[]) => {
         this._notyf.success('Balance Successfully Updated!');
         this.paymentComplete = true;
+
+        this._store.dispatch(new GetUser()); // Update balance on header bar
       });
   }
 

@@ -1,6 +1,6 @@
-export class CreatePaymentIntent {
+export class BeginDeposit {
 
-  public static readonly type: string = '[Deposit Page] Create Payment Intent';
+  public static readonly type: string = '[Deposit Page] Begin Deposit';
 
   public constructor(
     public amount: number
@@ -8,8 +8,8 @@ export class CreatePaymentIntent {
 
 }
 
-export class UpdateBalance {
+export class CompleteDeposit {
 
-  public static readonly type: string = '[Deposit Page] Update Balance';
+  public static readonly type: string = '[Deposit Page] Complete Deposit';
 
 }

@@ -1,9 +1,9 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { CustomResponse } from '../../services/auth/auth.service';
-import { CreatePaymentIntent, UpdateBalance } from '../actions';
+import { BeginDeposit, CompleteDeposit } from '../actions';
 import { Injectable } from '@angular/core';
-import { StripeService } from '../../services/stripe/stripe.service';
 import { UserAPIService } from '../../services/api/user/user.service';
+import { DepositAPIService } from '../../services/api/deposit/deposit.service';
 
 export interface DepositStateModel {
   clientSecret?: string;
@@ -21,14 +21,14 @@ export interface DepositStateModel {
 export class DepositState {
 
   public constructor(
-    private _stripe: StripeService,
+    private _depositApi: DepositAPIService,
     private _userApi: UserAPIService
   ) { }
 
-  @Action(CreatePaymentIntent)
-  public async createPaymentIntent(ctx: StateContext<DepositStateModel>, action: CreatePaymentIntent): Promise<void> {
+  @Action(BeginDeposit)
+  public async beginDeposit(ctx: StateContext<DepositStateModel>, action: BeginDeposit): Promise<void> {
     const state = ctx.getState();
-    const res: CustomResponse = await this._stripe.CreatePaymentIntent(action.amount);
+    const res: CustomResponse = await this._depositApi.BeginDeposit(action.amount);
 
     ctx.setState({
       ...state,
@@ -36,10 +36,10 @@ export class DepositState {
     });
   }
 
-  @Action(UpdateBalance)
-  public async updateBalance(ctx: StateContext<DepositStateModel>, action: UpdateBalance): Promise<void> {
+  @Action(CompleteDeposit)
+  public async completeDeposit(ctx: StateContext<DepositStateModel>, action: CompleteDeposit): Promise<void> {
     const state = ctx.getState();
-    const res: CustomResponse = await this._userApi.UpdateAccountBalance(ctx.getState().clientSecret);
+    const res: CustomResponse = await this._depositApi.CompleteDeposit(ctx.getState().clientSecret);
 
     ctx.setState({
       ...state,

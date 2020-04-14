@@ -26,9 +26,15 @@
   </div>
 </form>
 
-<div *ngIf="paymentComplete">
+<div *ngIf="paymentComplete" class="text-center">
+  <div class="icon-container">
+    <fa-icon [icon]="depositCompleteIcon" class="deposit-complete-icon"></fa-icon>
+  </div>
   <p>Your payment has been processed.</p>
   <p>Your account balance has been updated.</p>
+  <div>
+    <img src="../../../assets/svg/savings.svg">
+  </div>
 </div>
 
 <spinner [text]="'Depositing Funds...'" name="spinner"></spinner>
