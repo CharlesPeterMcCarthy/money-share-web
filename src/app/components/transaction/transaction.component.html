@@ -1,0 +1,16 @@
+<div class="transaction">
+  <div class="transaction-icon">
+    <div class="icon-circle">
+      <fa-icon [icon]="euroIcon"></fa-icon>
+    </div>
+  </div>
+  <div class="transaction-text">
+    <p class="text">You deposited {{ transaction.amount | money }}</p>
+    <p class="time">{{ transaction.times.createdAt | timeSince }}</p>
+  </div>
+  <div class="transaction-balance">
+    <span class="balance-detail" [ngClass]="transactionDirection()">{{ transaction.type | transactionSign }} {{ transaction.amount | money }}</span>
+    <fa-icon class="balance-detail" [icon]="arrowRightIcon"></fa-icon>
+    <span class="balance-detail">{{ transaction.newBalance | money }}</span>
+  </div>
+</div>
