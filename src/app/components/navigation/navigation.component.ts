@@ -12,7 +12,8 @@ export class NavigationComponent {
     { text: 'Login', url: '/login' },
     { text: 'Sign Up', url: '/search' },
     { text: 'Dashboard', url: '/dashboard' },
-    { text: 'Deposit', url: '/deposit' }
+    { text: 'Deposit', url: '/deposit' },
+    { text: 'Transactions', url: '/transactions' }
   ];
 
 }

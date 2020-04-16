@@ -1,0 +1,13 @@
+<page-heading title="Transactions"></page-heading>
+
+<transaction *ngFor="let transaction of transactions$ | async" [transaction]="transaction">
+  {{ transaction.transactionId }} - {{ transaction.amount }}
+</transaction>
+
+<div class="text-center" *ngIf="canLoadMore$ | async">
+  <button (click)="loadMore()" color="accent" mat-flat-button>Load More</button>
+</div>
+
+<div class="text-center no-more-transactions" *ngIf="!(canLoadMore$ | async)">
+  There are no more previous transactions.
+</div>

@@ -2,7 +2,6 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { CustomResponse } from '../../services/auth/auth.service';
 import { BeginDeposit, CompleteDeposit } from '../actions';
 import { Injectable } from '@angular/core';
-import { UserAPIService } from '../../services/api/user/user.service';
 import { DepositAPIService } from '../../services/api/deposit/deposit.service';
 
 export interface DepositStateModel {
@@ -21,8 +20,7 @@ export interface DepositStateModel {
 export class DepositState {
 
   public constructor(
-    private _depositApi: DepositAPIService,
-    private _userApi: UserAPIService
+    private _depositApi: DepositAPIService
   ) { }
 
   @Action(BeginDeposit)
