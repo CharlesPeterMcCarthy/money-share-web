@@ -1,0 +1,29 @@
+<page-heading title="Withdraw"></page-heading>
+
+<form [formGroup]="withdrawForm" *ngIf="!withdrawComplete">
+  <div class="form-row">
+    <mat-form-field class="full-width">
+      <mat-label>Deposit Amount</mat-label>
+      <input type="number" id="amount" formControlName="amount" step="0.01" value="10" matInput>
+    </mat-form-field>
+
+    <p class="error-text" *ngIf="amountErrors">{{ amountErrors }}</p>
+  </div>
+
+  <div class="text-right">
+    <button color="accent" (click)="submit()" mat-flat-button>Withdraw Money</button>
+  </div>
+</form>
+
+<div *ngIf="withdrawComplete" class="text-center">
+  <div class="icon-container">
+    <fa-icon [icon]="withdrawCompleteIcon" class="deposit-complete-icon"></fa-icon>
+  </div>
+  <p>Your payment has been processed.</p>
+  <p>Your account balance has been updated.</p>
+  <div>
+    <img src="../../../assets/svg/withdraw.svg">
+  </div>
+</div>
+
+<spinner [text]="'Depositing Funds...'" name="spinner"></spinner>

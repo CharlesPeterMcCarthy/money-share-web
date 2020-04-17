@@ -12,11 +12,6 @@ export class UserAPIService {
     private _api: ApiService
   ) { }
 
-  public GetUser = (): Promise<CustomResponse> => API.get(this._api.name, '/users/current', '').catch(this.handleError);
-
-  private handleError = (error: any): void => {
-    if (!error.response || !error.response.data || !error.response.data) throw { message: 'Unknown Error' };
-    throw error.response.data.error || error.response.data.message;
-  }
+  public GetUser = (): Promise<CustomResponse> => API.get(this._api.name, '/users/current', '').catch(this._api.handleError);
 
 }

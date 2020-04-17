@@ -13,11 +13,7 @@ export class TransactionAPIService {
     private _api: ApiService
   ) { }
 
-  public GetAll = (lastEvaluatedKey?: LastEvaluatedKey): Promise<CustomResponse> => API.post(this._api.name, '/transaction/all', { body: { lastEvaluatedKey } }).catch(this.handleError);
-
-  private handleError = (error: any): void => {
-    if (!error.response || !error.response.data || !error.response.data) throw { message: 'Unknown Error' };
-    throw error.response.data.error || error.response.data.message;
-  }
+  public GetAll = (lastEvaluatedKey?: LastEvaluatedKey): Promise<CustomResponse> =>
+    API.post(this._api.name, '/transaction/all', { body: { lastEvaluatedKey } }).catch(this._api.handleError);
 
 }

@@ -41,7 +41,8 @@ export class DepositState {
 
     ctx.setState({
       ...state,
-      paymentComplete: !!res.success
+      paymentComplete: !!res.success,
+      clientSecret: undefined
     });
   }
 

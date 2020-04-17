@@ -15,7 +15,7 @@ import { NOTYF, notyfFactory } from './utils/notyf.token';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AmplifyAngularModule, AmplifyModules, AmplifyService } from 'aws-amplify-angular';
 import { Auth } from 'aws-amplify';
-import { LoginState, SignUpState, ConfirmEmailState, UserState, DepositState, TransactionState } from './ngxs/states';
+import { LoginState, SignUpState, ConfirmEmailState, UserState, DepositState, TransactionState, WithdrawState } from './ngxs/states';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 
 import { AppComponent } from './app.component';
@@ -35,6 +35,7 @@ import { TransactionComponent } from './components/transaction/transaction.compo
 import { MoneyPipe } from './pipes/money/money.pipe';
 import { TimeSincePipe } from './pipes/time-since/time-since.pipe';
 import { TransactionSignPipe } from './pipes/transaction-sign/transaction-sign.pipe';
+import { WithdrawComponent } from './pages/withdraw/withdraw.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { TransactionSignPipe } from './pipes/transaction-sign/transaction-sign.p
     TransactionComponent,
     MoneyPipe,
     TimeSincePipe,
-    TransactionSignPipe
+    TransactionSignPipe,
+    WithdrawComponent
   ],
   imports: [
     BrowserModule,
@@ -71,8 +73,9 @@ import { TransactionSignPipe } from './pipes/transaction-sign/transaction-sign.p
       ConfirmEmailState,
       UserState,
       DepositState,
+      WithdrawState,
       TransactionState
-    ]),
+    ], { developmentMode: true }),
     NgxsDispatchPluginModule.forRoot()
   ],
   providers: [

@@ -13,6 +13,7 @@ export class NavigationComponent {
     { text: 'Sign Up', url: '/signup' },
     { text: 'Dashboard', url: '/dashboard' },
     { text: 'Deposit', url: '/deposit' },
+    { text: 'Withdraw', url: '/withdraw' },
     { text: 'Transactions', url: '/transactions' }
   ];
 

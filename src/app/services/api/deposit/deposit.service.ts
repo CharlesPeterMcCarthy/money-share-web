@@ -12,13 +12,10 @@ export class DepositAPIService {
     private _api: ApiService
   ) { }
 
-  public BeginDeposit = (amount: number): Promise<CustomResponse> => API.post(this._api.name, `/deposit/${amount}`, '').catch(this.handleError);
+  public BeginDeposit = (amount: number): Promise<CustomResponse> =>
+    API.post(this._api.name, `/deposit/${amount}`, '').catch(this._api.handleError);
 
-  public CompleteDeposit = (clientSecret: string): Promise<CustomResponse> => API.put(this._api.name, '/deposit/complete', { body: { clientSecret } }).catch(this.handleError);
-
-  private handleError = (error: any): void => {
-    if (!error.response || !error.response.data || !error.response.data) throw { message: 'Unknown Error' };
-    throw error.response.data.error || error.response.data.message;
-  }
+  public CompleteDeposit = (clientSecret: string): Promise<CustomResponse> =>
+    API.put(this._api.name, '/deposit/complete', { body: { clientSecret } }).catch(this._api.handleError);
 
 }

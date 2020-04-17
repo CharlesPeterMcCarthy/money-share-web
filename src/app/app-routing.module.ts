@@ -8,6 +8,7 @@ import { DepositComponent } from './pages/deposit/deposit.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 import { LoggedInGuard } from './guards/logged-in/logged-in.guard';
 import { LoggedOutGuard } from './guards/logged-out/logged-out.guard';
+import { WithdrawComponent } from './pages/withdraw/withdraw.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [ LoggedOutGuard ] },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'confirm/:email/:code', component: ConfirmEmailComponent, canActivate: [ LoggedOutGuard ] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [ LoggedInGuard ] },
   { path: 'deposit', component: DepositComponent, canActivate: [ LoggedInGuard ] },
+  { path: 'withdraw', component: WithdrawComponent, canActivate: [ LoggedInGuard ] },
   { path: 'transactions', component: TransactionsComponent, canActivate: [ LoggedInGuard ] },
   { path: '**', redirectTo: '' }
 ];

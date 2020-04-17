@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { loadStripe, PaymentIntent, Stripe, StripeCardElement, StripeCardElementChangeEvent, StripeError } from '@stripe/stripe-js';
+import { loadStripe, PaymentIntent, Stripe, StripeCardElement, StripeCardElementChangeEvent, StripeError, Token } from '@stripe/stripe-js';
 import { environment } from '../../../environments/environment';
 import { Select, Store } from '@ngxs/store';
 import { DepositState, DepositStateModel } from '../../ngxs/states';
@@ -84,6 +84,10 @@ export class DepositComponent implements OnInit {
 
     const amount: number = this.amount.value * 100; // Convert to cent
     if (amount < 1000 || amount > 50000) return;
+
+    // this.stripe.createToken(this.card).then((result: { token: Token; error?: StripeError}) => {
+    //   console.log(result);
+    // });
 
     this._store
       .dispatch(new BeginDeposit(amount))

@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="transaction-text">
-    <p class="text">You deposited {{ transaction.amount | money }}</p>
+    <p class="text">{{ transaction.text }}</p>
     <p class="time">{{ transaction.times.createdAt | timeSince }}</p>
   </div>
   <div class="transaction-balance">
