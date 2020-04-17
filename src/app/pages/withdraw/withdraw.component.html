@@ -1,9 +1,9 @@
 <page-heading title="Withdraw"></page-heading>
 
-<form [formGroup]="withdrawForm" *ngIf="!withdrawComplete">
+<form [formGroup]="withdrawForm" *ngIf="!(withdrawComplete$ | async)">
   <div class="form-row">
     <mat-form-field class="full-width">
-      <mat-label>Deposit Amount</mat-label>
+      <mat-label>Withdrawal Amount</mat-label>
       <input type="number" id="amount" formControlName="amount" step="0.01" value="10" matInput>
     </mat-form-field>
 
@@ -15,15 +15,15 @@
   </div>
 </form>
 
-<div *ngIf="withdrawComplete" class="text-center">
+<div *ngIf="withdrawComplete$ | async" class="text-center">
   <div class="icon-container">
-    <fa-icon [icon]="withdrawCompleteIcon" class="deposit-complete-icon"></fa-icon>
+    <fa-icon [icon]="withdrawCompleteIcon" class="withdraw-complete-icon"></fa-icon>
   </div>
-  <p>Your payment has been processed.</p>
-  <p>Your account balance has been updated.</p>
+  <p>Your withdrawal has been processed.</p>
+  <p>The amount will be sent to your bank account.</p>
   <div>
     <img src="../../../assets/svg/withdraw.svg">
   </div>
 </div>
 
-<spinner [text]="'Depositing Funds...'" name="spinner"></spinner>
+<spinner [text]="'Withdrawing Funds...'" name="spinner"></spinner>

@@ -21,6 +21,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 export class DepositComponent implements OnInit {
 
   @Select(DepositState) public depositState$: Observable<any>;
+  @Select(State => State.deposit.paymentComplete) public paymentComplete$: Observable<boolean>;
 
   public depositForm: FormGroup;
 
@@ -28,7 +29,6 @@ export class DepositComponent implements OnInit {
   public card: StripeCardElement;
   public cardErrors: string;
   public amountErrors: string;
-  public paymentComplete: boolean = false;
   public depositCompleteIcon: IconDefinition = faCheck;
 
   public constructor(
@@ -116,7 +116,7 @@ export class DepositComponent implements OnInit {
       .pipe(withLatestFrom(this.depositState$))
       .subscribe(([ _, deposit ]: DepositStateModel[]) => {
         this._notyf.success('Balance Successfully Updated!');
-        this.paymentComplete = true;
+        console.log(_);
 
         this._store.dispatch(new GetUser()); // Update balance on header bar
       });

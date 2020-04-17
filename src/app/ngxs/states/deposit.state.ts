@@ -39,9 +39,11 @@ export class DepositState {
     const state = ctx.getState();
     const res: CustomResponse = await this._depositApi.CompleteDeposit(ctx.getState().clientSecret);
 
+    console.log(res);
+
     ctx.setState({
       ...state,
-      paymentComplete: !!res.success,
+      paymentComplete: res.success,
       clientSecret: undefined
     });
   }

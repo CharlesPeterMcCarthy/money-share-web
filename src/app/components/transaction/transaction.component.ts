@@ -24,7 +24,7 @@ export class TransactionComponent implements OnInit {
       case 'RECEIVE':
         return 'positive';
       case 'WITHDRAW':
-      case 'SEND':
+      case 'TRANSFER':
         return 'negative';
       default:
         return '';

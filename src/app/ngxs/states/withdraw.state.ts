@@ -29,8 +29,8 @@ export class WithdrawState {
     console.log(res);
 
     ctx.setState({
-      ...state
-      // clientSecret: res.clientSecret
+      ...state,
+      withdrawComplete: res.success
     });
   }
 

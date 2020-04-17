@@ -9,6 +9,7 @@ import { TransactionsComponent } from './pages/transactions/transactions.compone
 import { LoggedInGuard } from './guards/logged-in/logged-in.guard';
 import { LoggedOutGuard } from './guards/logged-out/logged-out.guard';
 import { WithdrawComponent } from './pages/withdraw/withdraw.component';
+import { SendMoneyComponent } from './pages/send-money/send-money.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [ LoggedOutGuard ] },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'deposit', component: DepositComponent, canActivate: [ LoggedInGuard ] },
   { path: 'withdraw', component: WithdrawComponent, canActivate: [ LoggedInGuard ] },
   { path: 'transactions', component: TransactionsComponent, canActivate: [ LoggedInGuard ] },
+  { path: 'send-money', component: SendMoneyComponent, canActivate: [ LoggedInGuard ] },
   { path: '**', redirectTo: '' }
 ];
 

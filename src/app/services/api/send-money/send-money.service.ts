@@ -13,7 +13,7 @@ export class SendMoneyAPIService {
     private _api: ApiService
   ) { }
 
-  public SendMoney = (transfer: Transfer): Promise<CustomResponse> =>
+  public SendMoney = (transfer: Partial<Transfer>): Promise<CustomResponse> =>
     API.put(this._api.name, `/transfer`, { body: { transfer } }).catch(this._api.handleError);
 
 }

@@ -1,0 +1,29 @@
+<page-heading title="Send Money to a Friend"></page-heading>
+
+<form [formGroup]="sendMoneyForm" *ngIf="!(transferComplete$ | async)">
+  <div class="form-row">
+    <mat-form-field class="full-width">
+      <mat-label>Transfer Amount</mat-label>
+      <input type="number" id="amount" formControlName="amount" step="0.01" value="10" matInput>
+    </mat-form-field>
+
+    <p class="error-text" *ngIf="amountErrors">{{ amountErrors }}</p>
+  </div>
+
+  <div class="text-right">
+    <button color="accent" (click)="submit()" mat-flat-button>Transfer Money</button>
+  </div>
+</form>
+
+<div *ngIf="transferComplete$ | async" class="text-center">
+  <div class="icon-container">
+    <fa-icon [icon]="transferCompleteIcon" class="transfer-complete-icon"></fa-icon>
+  </div>
+  <p>Your have successfully transferred money to your friend.</p>
+  <p>Your account balance has been updated.</p>
+  <div>
+    <img src="../../../assets/svg/transfer.svg">
+  </div>
+</div>
+
+<spinner [text]="'Sending Money...'" name="spinner"></spinner>

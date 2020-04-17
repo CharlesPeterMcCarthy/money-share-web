@@ -5,3 +5,4 @@ export * from './user.actions';
 export * from './deposit.actions';
 export * from './transaction.actions';
 export * from './withdraw.actions';
+export * from './send-money.actions';

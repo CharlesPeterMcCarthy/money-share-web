@@ -15,7 +15,6 @@ import { NOTYF, notyfFactory } from './utils/notyf.token';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AmplifyAngularModule, AmplifyModules, AmplifyService } from 'aws-amplify-angular';
 import { Auth } from 'aws-amplify';
-import { LoginState, SignUpState, ConfirmEmailState, UserState, DepositState, TransactionState, WithdrawState } from './ngxs/states';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 
 import { AppComponent } from './app.component';
@@ -26,6 +25,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { DepositComponent } from './pages/deposit/deposit.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
+import { WithdrawComponent } from './pages/withdraw/withdraw.component';
+import { SendMoneyComponent } from './pages/send-money/send-money.component';
 
 import { NavLinkComponent } from './components/navigation/nav-link/nav-link.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -35,7 +36,17 @@ import { TransactionComponent } from './components/transaction/transaction.compo
 import { MoneyPipe } from './pipes/money/money.pipe';
 import { TimeSincePipe } from './pipes/time-since/time-since.pipe';
 import { TransactionSignPipe } from './pipes/transaction-sign/transaction-sign.pipe';
-import { WithdrawComponent } from './pages/withdraw/withdraw.component';
+
+import {
+  LoginState,
+  SignUpState,
+  ConfirmEmailState,
+  UserState,
+  DepositState,
+  TransactionState,
+  WithdrawState,
+  SendMoneyState
+} from './ngxs/states';
 
 @NgModule({
   declarations: [
@@ -54,7 +65,8 @@ import { WithdrawComponent } from './pages/withdraw/withdraw.component';
     MoneyPipe,
     TimeSincePipe,
     TransactionSignPipe,
-    WithdrawComponent
+    WithdrawComponent,
+    SendMoneyComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +86,8 @@ import { WithdrawComponent } from './pages/withdraw/withdraw.component';
       UserState,
       DepositState,
       WithdrawState,
-      TransactionState
+      TransactionState,
+      SendMoneyState
     ], { developmentMode: true }),
     NgxsDispatchPluginModule.forRoot()
   ],
