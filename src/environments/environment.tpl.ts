@@ -7,6 +7,14 @@ export const environment = {
   production: true,
   brand: '{{ BRAND_NAME }}',
   stripeAPIKey: '{{ STRIPE_API_KEY }}',
+  s3Bucket: {
+    access: {
+      accessKeyId: '{{ ACCESS_KEY_ID }}',
+      secretAccessKey: '{{ SECRET_ACCESS_KEY }}',
+      region: '{{ REGION }}'
+    },
+    name: '{{ BUCKET_NAME }}'
+  },
   awsConfig: {
     Auth: {
       identityPoolId: '{{ IDENTITY_POOL_ID }}',
