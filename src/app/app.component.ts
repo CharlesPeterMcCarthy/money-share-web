@@ -9,6 +9,8 @@ import { UserState, UserStateModel } from './ngxs/states';
 import { Observable } from 'rxjs';
 import { GetUser } from './ngxs/actions';
 import { User } from '@moneyshare/common-types';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MoneyBottomSheetComponent } from './components/money-bottom-sheet/money-bottom-sheet.component';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +31,8 @@ export class AppComponent implements OnInit {
     private _title: Title,
     private _auth: AuthService,
     private _userAPI: UserAPIService,
-    private _store: Store
+    private _store: Store,
+    private _bottomSheet: MatBottomSheet
   ) { }
 
   public async ngOnInit(): Promise<void> {
@@ -49,4 +52,7 @@ export class AppComponent implements OnInit {
 
   public accountBalance = (): string => ((this.user && this.user.accountBalance || 0) / 100).toFixed(2);
 
+  public moneyOptions = (): void => {
+    this._bottomSheet.open(MoneyBottomSheetComponent);
+  }
 }

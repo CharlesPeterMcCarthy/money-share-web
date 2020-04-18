@@ -1,0 +1,23 @@
+<div class="text-center balance">
+  {{ (accountBalance$ | async) | money }}
+</div>
+
+<mat-nav-list>
+  <a routerLink="/send-money" mat-list-item (click)="dismiss($event)">
+    <fa-icon [icon]="sendMoneyIcon" mat-list-icon></fa-icon>
+    <span mat-line>Send Money</span>
+    <span mat-line>Send funds to a friend</span>
+  </a>
+
+  <a routerLink="/deposit" mat-list-item (click)="dismiss($event)">
+    <fa-icon [icon]="depositIcon" mat-list-icon></fa-icon>
+    <span mat-line>Deposit</span>
+    <span mat-line>Add funds to your MoneyShare account</span>
+  </a>
+
+  <a routerLink="/withdraw" mat-list-item (click)="dismiss($event)">
+    <fa-icon [icon]="withdrawIcon" mat-list-icon></fa-icon>
+    <span mat-line>Withdraw</span>
+    <span mat-line>Move funds to your bank account</span>
+  </a>
+</mat-nav-list>

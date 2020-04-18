@@ -11,7 +11,7 @@
     <fa-icon [icon]="closeNavIcon" class="nav-icon" (click)="drawer.toggle()" *ngIf="drawer.opened"></fa-icon>
     <fa-icon [icon]="signOutIcon" class="nav-icon logout" (click)="signOut()" *ngIf="isLoggedIn()"></fa-icon>
 
-    <span class="account-balance">€{{ accountBalance() }}</span>
+    <div class="account-balance" (click)="moneyOptions()">€{{ accountBalance() }}</div>
   </div>
 
   <div class="content container">
