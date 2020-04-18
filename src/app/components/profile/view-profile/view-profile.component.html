@@ -1,0 +1,40 @@
+<div class="view-profile" *ngIf="profile">
+  <button class="btn btn-primary btn-md edit-profile-btn orange-btn" type="button" *ngIf="isMyProfile" [routerLink]="[ '/profile/edit' ]">
+    Edit Profile <fa-icon [icon]="editIcon"></fa-icon>
+  </button>
+
+  <div class="avatar-container">
+    <div class="img-wrapper" [style.background-image]="avatar">
+      <div class="balance" *ngIf="isMyProfile && profile.accountBalance">
+        {{ profile.accountBalance | money }}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-container" *ngIf="isMyProfile">
+    <label>Email Address</label>
+    <p class="info">{{ myProfile().email }}</p>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="info-container">
+    <label>First Name</label>
+    <p class="info">{{ profile.firstName }}</p>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="info-container">
+    <label>Last Name</label>
+    <p class="info">{{ profile.lastName }}</p>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="info-container">
+    <label>Signed Up</label>
+    <p class="info">{{ profile.times.createdAt | timeSince }}</p>
+  </div>
+</div>
+
