@@ -12,38 +12,46 @@
   .avatar-container
     margin-bottom 20px
     position relative
+    display flex
+    justify-content center
 
-    div.img-wrapper
-      height 30vw
-      width 30vw
-      max-height 400px
-      max-width 400px
-      min-height 200px
-      min-width 200px
-      border-radius 50%
-      background-size cover
-      background-position center
-      margin-left auto
-      margin-right auto
-      position relative
-      border 1px solid #EEE
-
-      .balance
-        background-color accent
-        color white
-        width 100px
-        text-align center
-        padding 6px
-        border-radius 4px
-        position absolute
-        left 0
-        right 0
-        bottom -8px
+    label
+      .img-wrapper
+        height 30vw
+        width 30vw
+        max-height 400px
+        max-width 400px
+        min-height 200px
+        min-width 200px
+        border-radius 50%
+        background-size cover
+        background-position center
         margin-left auto
         margin-right auto
-        transition background-color 0.4s
-        font-size 18px
-        font-weight bold
+        position relative
+        border 1px solid #EEE
+        cursor pointer
+
+    .balance
+      background-color accent
+      color white
+      width 100px
+      text-align center
+      padding 6px
+      border-radius 4px
+      position absolute
+      left 0
+      right 0
+      bottom 0
+      margin-left auto
+      margin-right auto
+      transition background-color 0.4s
+      font-size 18px
+      font-weight bold
+      cursor pointer
+
+      &:hover
+        background-color accent-light
 
   div
     &.info-container

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CustomResponse } from '../../auth/auth.service';
 import { API } from 'aws-amplify';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../api.service';
 
 @Injectable({
   providedIn: 'root'

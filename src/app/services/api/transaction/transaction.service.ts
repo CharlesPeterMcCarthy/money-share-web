@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../api.service';
 import { CustomResponse } from '../../auth/auth.service';
 import { API } from 'aws-amplify';
 import { LastEvaluatedKey } from '@moneyshare/common-types';

@@ -1,6 +1,6 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { CustomResponse } from '../../services/auth/auth.service';
-import { EditProfile, GetMyProfile, GetOtherProfile } from '../actions';
+import { EditProfile, GetMyProfile, GetOtherProfile, UpdateAvatar } from '../actions';
 import { Inject, Injectable } from '@angular/core';
 import { User } from '@moneyshare/common-types';
 import { UserAPIService } from '../../services/api/user/user.service';
@@ -80,7 +80,6 @@ export class ProfileState {
   @Action(EditProfile)
   public async editProfile(ctx: StateContext<ProfileStateModel>, action: EditProfile): Promise<void> {
     const state = ctx.getState();
-    console.log(action);
     const res: CustomResponse | void = await this._userAPI.EditProfile({ firstName: action.firstName, lastName: action.lastName });
 
     console.log(res);
@@ -101,6 +100,31 @@ export class ProfileState {
       });
 
       this._notyf.error('Unable to Update Your Profile');
+    }
+  }
+
+  @Action(UpdateAvatar)
+  public async updateAvatar(ctx: StateContext<ProfileStateModel>, action: UpdateAvatar): Promise<void> {
+    const state = ctx.getState();
+    const res: CustomResponse | void = await this._userAPI.EditProfile({ avatar: action.avatar });
+
+    console.log(res);
+
+    if (res) {
+      ctx.setState({
+        ...state,
+        user: res.success ? res.user : undefined,
+        isCurrentUser: true
+      });
+
+      this._notyf.success('Avatar Successfully Updated');
+    } else {
+      ctx.setState({
+        ...state,
+        isCurrentUser: false
+      });
+
+      this._notyf.error('Unable to Update Your Avatar');
     }
   }
 

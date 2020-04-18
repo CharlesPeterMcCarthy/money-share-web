@@ -55,4 +55,5 @@ export class AppComponent implements OnInit {
   public moneyOptions = (): void => {
     this._bottomSheet.open(MoneyBottomSheetComponent);
   }
+
 }

@@ -9,8 +9,8 @@ import { UserAPIService } from '../../../services/api/user/user.service';
 import { NOTYF } from '../../../utils/notyf.token';
 import { Notyf } from 'notyf';
 import { EditProfile } from '../../../ngxs/actions';
-import { Store } from '@ngxs/store';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'edit-profile',
@@ -50,8 +50,7 @@ export class EditProfileComponent implements OnInit {
     if (!this.form.valid) return;
     await this._spinner.show('spinner');
 
-    this._store.dispatch(new EditProfile(this.firstName.value, this.lastName.value)).subscribe((data) => {
-      console.log(data);
+    this._store.dispatch(new EditProfile(this.firstName.value, this.lastName.value)).subscribe(() => {
       this._spinner.hide('spinner');
     });
   }
