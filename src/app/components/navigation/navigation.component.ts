@@ -15,7 +15,8 @@ export class NavigationComponent {
     { text: 'Deposit', url: '/deposit' },
     { text: 'Withdraw', url: '/withdraw' },
     { text: 'Transactions', url: '/transactions' },
-    { text: 'Send Money', url: '/send-money' }
+    { text: 'Send Money', url: '/send-money' },
+    { text: 'My Profile', url: '/profile' }
   ];
 
 }

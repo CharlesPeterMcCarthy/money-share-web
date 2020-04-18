@@ -1,5 +1,5 @@
 <div class="view-profile" *ngIf="profile">
-  <button class="btn btn-primary btn-md edit-profile-btn orange-btn" type="button" *ngIf="isMyProfile" [routerLink]="[ '/profile/edit' ]">
+  <button class="edit-profile-btn" color="accent" *ngIf="isMyProfile" [routerLink]="[ '/profile/edit' ]" mat-stroked-button>
     Edit Profile <fa-icon [icon]="editIcon"></fa-icon>
   </button>
 

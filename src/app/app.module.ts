@@ -10,6 +10,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 import { NOTYF, notyfFactory } from './utils/notyf.token';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -45,8 +49,13 @@ import {
   DepositState,
   TransactionState,
   WithdrawState,
-  SendMoneyState
+  SendMoneyState, ProfileState
 } from './ngxs/states';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ViewProfileComponent } from './components/profile/view-profile/view-profile.component';
+import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
+import { MoneyBottomSheetComponent } from './components/money-bottom-sheet/money-bottom-sheet.component';
+import { PageFooterComponent } from './components/page-footer/page-footer.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +75,12 @@ import {
     TimeSincePipe,
     TransactionSignPipe,
     WithdrawComponent,
-    SendMoneyComponent
+    SendMoneyComponent,
+    ProfileComponent,
+    ViewProfileComponent,
+    EditProfileComponent,
+    MoneyBottomSheetComponent,
+    PageFooterComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +89,10 @@ import {
     MatSidenavModule,
     MatInputModule,
     MatButtonModule,
+    MatDividerModule,
+    MatBottomSheetModule,
+    MatListModule,
+    MatIconModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
@@ -87,8 +105,11 @@ import {
       DepositState,
       WithdrawState,
       TransactionState,
-      SendMoneyState
-    ], { developmentMode: true }),
+      SendMoneyState,
+      ProfileState
+    ], {
+      developmentMode: true
+    }),
     NgxsDispatchPluginModule.forRoot()
   ],
   providers: [

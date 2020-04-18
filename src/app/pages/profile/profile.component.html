@@ -1,0 +1,10 @@
+<page-heading title="My Profile" *ngIf="isMyProfile && !editProfile"></page-heading>
+<page-heading title="Edit Profile" *ngIf="isMyProfile && editProfile"></page-heading>
+<page-heading title="View Profile" *ngIf="!isMyProfile && !editProfile"></page-heading>
+
+<div class="profile content-panel">
+  <view-profile *ngIf="!editProfile && (profile$ | async)" [profile]="profile$ | async" [isMyProfile]="isMyProfile"></view-profile>
+  <edit-profile *ngIf="editProfile && (profile$ | async)" [profile]="profile$ | async"></edit-profile>
+</div>
+
+<spinner [text]="'Retrieving Profile...'" name="spinner"></spinner>
