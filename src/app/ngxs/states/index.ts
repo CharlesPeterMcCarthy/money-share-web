@@ -6,3 +6,4 @@ export * from './deposit.state';
 export * from './transaction.state';
 export * from './withdraw.state';
 export * from './send-money.state';
+export * from './profile.state';

@@ -1,0 +1,29 @@
+<form *ngIf="profile" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row">
+    <div class="form-group col-12 col offset-md-2 col-md-8">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>First Name</mat-label>
+        <input placeholder="First Name" formControlName="firstName" matInput>
+        <mat-error *ngIf="firstName.invalid && firstName.touched">
+          You must enter a first name
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group col-12 col offset-md-2 col-md-8">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Last Name</mat-label>
+        <input placeholder="v" formControlName="lastName" matInput>
+        <mat-error *ngIf="lastName.invalid && lastName.touched">
+          You must enter a last name
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="text-right col-12 offset-md-2 col-md-8">
+      <button class="edit-profile-btn" color="accent" type="submit" [disabled]="!form.valid" mat-flat-button>
+        Update Profile <fa-icon [icon]="saveIcon"></fa-icon>
+      </button>
+    </div>
+  </div>
+</form>
