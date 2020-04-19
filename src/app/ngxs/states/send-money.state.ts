@@ -1,6 +1,6 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { CustomResponse } from '../../services/auth/auth.service';
-import { RecipientSearch, SendMoney } from '../actions';
+import { SendMoney } from '../actions';
 import { Injectable } from '@angular/core';
 import { SendMoneyAPIService } from '../../services/api/send-money/send-money.service';
 import { Transfer, User } from '@moneyshare/common-types';
@@ -33,7 +33,7 @@ export class SendMoneyState {
     const transfer: Partial<Transfer> = {
       amount: action.amount,
       message: 'test',
-      recipientUserId: '156b3474-19c7-4b9b-bf36-bbd2752d7389'
+      recipientUserId: action.recipientId
     };
 
     const res: CustomResponse = await this._sendMoneyApi.SendMoney(transfer);
@@ -43,20 +43,6 @@ export class SendMoneyState {
     ctx.setState({
       ...state,
       transferComplete: res.success
-    });
-  }
-
-  @Action(RecipientSearch)
-  public async recipientSearch(ctx: StateContext<SendMoneyStateModel>, action: RecipientSearch): Promise<void> {
-    const state = ctx.getState();
-
-    const res: CustomResponse = await this._userApi.UserSearch(action.searchText);
-
-    console.log(res);
-
-    ctx.setState({
-      ...state,
-      matchingUsers: res.users
     });
   }
 

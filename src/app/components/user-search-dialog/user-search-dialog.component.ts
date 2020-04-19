@@ -9,7 +9,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 
 export interface DialogData {
-  userId: string;
+  user: User;
 }
 
 @Component({
@@ -46,14 +46,13 @@ export class UserSearchDialogComponent implements OnInit {
 
   public searchForUsers = (searchText: string): void => {
     if (searchText) {
-      console.log(searchText);
       this.searchText = searchText;
       this.debounceSearch();
     } else this._store.dispatch(new ClearResults());
   }
 
-  public selectUser = (user: Partial<User>): void => {
-    this.data.userId = user.userId;
+  public selectUser = (user: User): void => {
+    this.data.user = user;
     this._store.dispatch(new SelectUser(user));
   }
 

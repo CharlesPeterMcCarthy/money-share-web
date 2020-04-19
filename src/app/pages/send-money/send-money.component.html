@@ -1,55 +1,102 @@
-<page-heading title="Send Money to a Friend"></page-heading>
-
-<form [formGroup]="sendMoneyForm" *ngIf="!(transferComplete$ | async)">
-  <div class="form-row">
-    <mat-form-field class="full-width">
-      <mat-label>Transfer Amount</mat-label>
-      <input type="number" id="amount" formControlName="amount" step="0.01" value="10" matInput>
-    </mat-form-field>
-
-    <mat-error *ngIf="amountErrors">
-      {{ amountErrors }}
-    </mat-error>
-  </div>
-
-  <div class="form-row">
-    <mat-form-field class="full-width">
-      <mat-label>Message</mat-label>
-      <textarea formControlName="message" matInput></textarea>
-    </mat-form-field>
-
-    <mat-error *ngIf="amountErrors">
-      {{ amountErrors }}
-    </mat-error>
-  </div>
-
-  <div class="form-row">
-    <mat-form-field class="full-width">
-      <mat-label>Recipient</mat-label>
-      <input type="text" formControlName="recipientSearch" matInput>
-    </mat-form-field>
-  </div>
-
-  <mat-list dense>
-    <mat-list-item *ngFor="let user of matchingUsers$ | async">
-      <user-item [user]="user"></user-item>
-    </mat-list-item>
-  </mat-list>
-
-  <div class="text-right">
-    <button color="accent" (click)="submit()" mat-flat-button>Transfer Money</button>
-  </div>
-</form>
+<page-heading title="Send Money to a Friend" *ngIf="!(transferComplete$ | async)"></page-heading>
+<page-heading title="Money Sent" *ngIf="transferComplete$ | async"></page-heading>
 
 <div *ngIf="transferComplete$ | async" class="text-center">
   <div class="icon-container">
     <fa-icon [icon]="transferCompleteIcon" class="transfer-complete-icon"></fa-icon>
   </div>
-  <p>Your have successfully transferred money to your friend.</p>
+
+  <p>Your have successfully transferred {{ (amount.value * 100) | money }} to <span class="clickable-text" [routerLink]="[ '/profile', recipientUser.userId ]">
+    {{ recipientUser.firstName }} {{ recipientUser.lastName }}
+  </span>.</p>
+
   <p>Your account balance has been updated.</p>
+
   <div>
     <img src="../../../assets/svg/transfer.svg">
   </div>
 </div>
+
+<mat-vertical-stepper [linear]="true" *ngIf="!(transferComplete$ | async)">
+  <mat-step [stepControl]="recipientForm">
+    <form [formGroup]="recipientForm">
+      <ng-template matStepLabel>Choose a Friend</ng-template>
+
+      <div *ngIf="(currentUser$ | async) && !recipientUser">
+        <p>Choose a friend from the list below or <span class="clickable-text" (click)="openRecipientSearchDialog()">search for a friend</span>.</p>
+        <user-item *ngFor="let recent of (currentUser$ | async).recentRecipients" [user]="recent" (click)="selectRecipient(recent)"></user-item>
+      </div>
+
+      <div *ngIf="recipientUser" class="selected-user-details">
+        <img src="{{ recipientUser.avatar || './assets/images/noavatar.jpg' }}" />
+        <p>Sending funds to {{ recipientUser.firstName }} {{ recipientUser.lastName }}</p>
+      </div>
+
+      <div class="text-right">
+        <button (click)="openRecipientSearchDialog()" *ngIf="!recipientUser" color="accent" mat-stroked-button>Search for a Friend</button>
+        <button *ngIf="recipientUser" color="primary" (click)="resetRecipient()" mat-stroked-button>Change</button>
+        <button *ngIf="recipientUser" color="primary" [disabled]="recipientForm.invalid" mat-flat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="messageForm">
+    <form [formGroup]="messageForm">
+      <ng-template matStepLabel>Add a Message</ng-template>
+
+      <p>Write a short personalised message for your friend.</p>
+
+      <mat-form-field class="full-width">
+        <mat-label>Message</mat-label>
+        <textarea formControlName="message" matInput></textarea>
+      </mat-form-field>
+
+      <mat-error *ngIf="message.invalid && message.touched">
+        You must enter a message
+      </mat-error>
+
+      <div class="text-right">
+        <button color="primary" mat-stroked-button matStepperPrevious>Back</button>
+        <button color="primary" [disabled]="messageForm.invalid" mat-flat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="amountForm">
+    <form [formGroup]="amountForm">
+      <ng-template matStepLabel>Set Amount</ng-template>
+
+      <p>How much money do you want to send to {{ recipientUser.firstName }}?</p>
+
+      <mat-form-field class="full-width">
+        <mat-label>Amount</mat-label>
+        <input type="number" formControlName="amount" step="0.01" value="10" matInput>
+      </mat-form-field>
+
+      <mat-error *ngIf="amount.invalid && amount.touched">
+        The amount entered is invalid
+      </mat-error>
+
+      <div class="text-right">
+        <button color="primary" mat-stroked-button matStepperPrevious>Back</button>
+        <button color="primary" [disabled]="amountForm.invalid" mat-flat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <form>
+      <ng-template matStepLabel>Confirm</ng-template>
+      <p>You are sending {{ (amount.value * 100) | money}} to {{ recipientUser.firstName }} {{ recipientUser.lastName }}.</p>
+
+      <p>Is this correct?</p>
+
+      <div class="text-right">
+        <button color="primary" mat-stroked-button matStepperPrevious>Back</button>
+        <button color="accent" (click)="submit()" mat-flat-button>Yes, Transfer Money</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-vertical-stepper>
 
 <spinner [text]="'Sending Money...'" name="spinner"></spinner>

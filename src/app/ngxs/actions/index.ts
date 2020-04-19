@@ -7,3 +7,4 @@ export * from './transaction.actions';
 export * from './withdraw.actions';
 export * from './send-money.actions';
 export * from './profile.actions';
+export * from './user-search-dialog.actions';

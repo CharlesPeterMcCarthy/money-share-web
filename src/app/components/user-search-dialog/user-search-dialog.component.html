@@ -33,6 +33,6 @@
 
   <div class="buttons" mat-dialog-actions>
     <button mat-button (click)="close()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data.userId" *ngIf="selectedUser$ | async" cdkFocusInitial>Continue</button>
+    <button mat-button [mat-dialog-close]="data" *ngIf="selectedUser$ | async" cdkFocusInitial>Continue</button>
   </div>
 </div>
