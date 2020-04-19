@@ -8,8 +8,9 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NOTYF } from '../../utils/notyf.token';
 import { Notyf } from 'notyf';
-import { GetUser, SendMoney } from '../../ngxs/actions';
+import { GetUser, RecipientSearch, SendMoney } from '../../ngxs/actions';
 import { withLatestFrom } from 'rxjs/operators';
+import { User } from '@moneyshare/common-types';
 
 @Component({
   selector: 'app-send-money',
@@ -20,6 +21,7 @@ export class SendMoneyComponent implements OnInit {
 
   @Select(SendMoneyState) public sendMoneyState$: Observable<any>;
   @Select(State => State.sendMoney.transferComplete) public transferComplete$: Observable<boolean>;
+  @Select(State => State.sendMoney.matchingUsers) public matchingUsers$: Observable<Array<Partial<User>>>;
 
   public sendMoneyForm: FormGroup;
   public amountErrors: string;
@@ -38,11 +40,23 @@ export class SendMoneyComponent implements OnInit {
         Validators.required,
         Validators.pattern('^(?!0\\.00)\\d{1,3}(,\\d{3})*(\\.\\d\\d)?$'),
         Validators.min(1)
-      ] ]
+      ] ],
+      recipientSearch: [ ],
+      message: []
     });
+
+    this.searchForRecipientsListener();
   }
 
   public get amount(): AbstractControl { return this.sendMoneyForm.get('amount'); }
+  public get recipientSearch(): AbstractControl { return this.sendMoneyForm.get('recipientSearch'); }
+  public get message(): AbstractControl { return this.sendMoneyForm.get('message'); }
+
+  private searchForRecipientsListener = (): void => {
+    this.recipientSearch.valueChanges.subscribe((search: string) => {
+      this._store.dispatch(new RecipientSearch(search));
+    });
+  }
 
   public submit = async (): Promise<void> => {
     await this._spinner.show('spinner');

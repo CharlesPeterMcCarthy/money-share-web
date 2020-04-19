@@ -56,7 +56,6 @@ export class ViewProfileComponent implements OnInit {
   public imageSelected = async (e: Event): Promise<void> => {
     const event = e as HTMLInputEvent; // For intellisense
     const imageFile: File = event.target.files && event.target.files.length && event.target.files[0];
-    console.log(imageFile);
     if (!imageFile) return;
     await this.uploadImage(imageFile);
   }
@@ -68,13 +67,12 @@ export class ViewProfileComponent implements OnInit {
 
   private imageUploadListener = (): void => {
     this._s3Service.uploadListener.subscribe(async (imageURL: string) => {
-      console.log(imageURL);
       if (!imageURL) return;
 
       this._store.dispatch(new UpdateAvatar(imageURL)).subscribe(() => {
         this._spinner.hide('spinner');
         this.setAvatar(imageURL);
-        this._s3Service.reset()
+        this._s3Service.reset();
       });
     });
   }

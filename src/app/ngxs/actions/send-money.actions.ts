@@ -7,3 +7,13 @@ export class SendMoney {
   ) { }
 
 }
+
+export class RecipientSearch {
+
+  public static readonly type: string = '[Send Money Page] Recipient Search';
+
+  public constructor(
+    public searchText: string
+  ) { }
+
+}

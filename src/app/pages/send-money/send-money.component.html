@@ -7,8 +7,34 @@
       <input type="number" id="amount" formControlName="amount" step="0.01" value="10" matInput>
     </mat-form-field>
 
-    <p class="error-text" *ngIf="amountErrors">{{ amountErrors }}</p>
+    <mat-error *ngIf="amountErrors">
+      {{ amountErrors }}
+    </mat-error>
   </div>
+
+  <div class="form-row">
+    <mat-form-field class="full-width">
+      <mat-label>Message</mat-label>
+      <textarea formControlName="message" matInput></textarea>
+    </mat-form-field>
+
+    <mat-error *ngIf="amountErrors">
+      {{ amountErrors }}
+    </mat-error>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field class="full-width">
+      <mat-label>Recipient</mat-label>
+      <input type="text" formControlName="recipientSearch" matInput>
+    </mat-form-field>
+  </div>
+
+  <mat-list dense>
+    <mat-list-item *ngFor="let user of matchingUsers$ | async">
+      <user-item [user]="user"></user-item>
+    </mat-list-item>
+  </mat-list>
 
   <div class="text-right">
     <button color="accent" (click)="submit()" mat-flat-button>Transfer Money</button>

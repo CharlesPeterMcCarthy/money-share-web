@@ -1,0 +1,38 @@
+<div class="dialog-box">
+  <div *ngIf="!(selectedUser$ | async)" mat-dialog-content>
+    <p>Search for a user by name or email</p>
+    <mat-form-field class="full-width">
+      <mat-label>Name or Email</mat-label>
+      <input (keyup)="searchForUsers(searchInput.value)" [value]="searchText$ | async" #searchInput matInput>
+    </mat-form-field>
+  </div>
+
+  <button mat-icon-button color="accent" *ngIf="selectedUser$ | async" class="change-btn" (click)="reset()">
+    <fa-icon [icon]="editIcon"></fa-icon>
+  </button>
+
+  <mat-list class="results-list" *ngIf="(matchingUsers$ | async).length && !(selectedUser$ | async) && !(isSearching$ | async)">
+    <mat-list-item class="result-item" *ngFor="let user of matchingUsers$ | async" (click)="selectUser(user)">
+      <user-item [user]="user"></user-item>
+    </mat-list-item>
+  </mat-list>
+
+  <div *ngIf="isSearching$ | async" class="spinner-container">
+    <mat-spinner
+      color="accent"
+      mode="indeterminate"
+      diameter="50"
+    >
+    </mat-spinner>
+  </div>
+
+  <div *ngIf="selectedUser$ | async" class="selected-user-details">
+    <img src="{{ (selectedUser$ | async).avatar || './assets/images/noavatar.jpg' }}" />
+    <p>You have chosen {{ (selectedUser$ | async).firstName }} {{ (selectedUser$ | async).lastName }}</p>
+  </div>
+
+  <div class="buttons" mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data.userId" *ngIf="selectedUser$ | async" cdkFocusInitial>Continue</button>
+  </div>
+</div>

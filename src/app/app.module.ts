@@ -12,8 +12,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { NOTYF, notyfFactory } from './utils/notyf.token';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -41,6 +43,13 @@ import { MoneyPipe } from './pipes/money/money.pipe';
 import { TimeSincePipe } from './pipes/time-since/time-since.pipe';
 import { TransactionSignPipe } from './pipes/transaction-sign/transaction-sign.pipe';
 
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ViewProfileComponent } from './components/profile/view-profile/view-profile.component';
+import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
+import { MoneyBottomSheetComponent } from './components/money-bottom-sheet/money-bottom-sheet.component';
+import { PageFooterComponent } from './components/page-footer/page-footer.component';
+import { UserItemComponent } from './components/user-item/user-item.component';
+
 import {
   LoginState,
   SignUpState,
@@ -51,11 +60,8 @@ import {
   WithdrawState,
   SendMoneyState, ProfileState
 } from './ngxs/states';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { ViewProfileComponent } from './components/profile/view-profile/view-profile.component';
-import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
-import { MoneyBottomSheetComponent } from './components/money-bottom-sheet/money-bottom-sheet.component';
-import { PageFooterComponent } from './components/page-footer/page-footer.component';
+import { UserSearchDialogComponent } from './components/user-search-dialog/user-search-dialog.component';
+import { UserSearchDialogState } from './ngxs/states/user-search-dialog.state';
 
 @NgModule({
   declarations: [
@@ -80,7 +86,9 @@ import { PageFooterComponent } from './components/page-footer/page-footer.compon
     ViewProfileComponent,
     EditProfileComponent,
     MoneyBottomSheetComponent,
-    PageFooterComponent
+    PageFooterComponent,
+    UserItemComponent,
+    UserSearchDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +101,9 @@ import { PageFooterComponent } from './components/page-footer/page-footer.compon
     MatBottomSheetModule,
     MatListModule,
     MatIconModule,
+    MatListModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
@@ -106,7 +117,8 @@ import { PageFooterComponent } from './components/page-footer/page-footer.compon
       WithdrawState,
       TransactionState,
       SendMoneyState,
-      ProfileState
+      ProfileState,
+      UserSearchDialogState
     ], {
       developmentMode: true
     }),

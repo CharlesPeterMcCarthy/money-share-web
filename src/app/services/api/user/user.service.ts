@@ -22,4 +22,7 @@ export class UserAPIService {
   public EditProfile = (user: Partial<User>): Promise<CustomResponse> =>
     API.put(this._api.name, `/users`, { body: { user } }).catch(this._api.handleError);
 
+  public UserSearch = (searchText: string): Promise<CustomResponse> =>
+    API.get(this._api.name, `/users/search/${searchText}`, '').catch(this._api.handleError);
+
 }
