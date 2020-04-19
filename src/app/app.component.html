@@ -1,9 +1,9 @@
-<mat-drawer-container class="app-container" autosize>
+<mat-drawer-container class="app-container" [ngClass]="!isLoggedIn() && 'show-background-svg'" autosize>
   <mat-drawer #drawer class="sidenav" mode="side">
     <div class="brand-name">
       <span>{{ brandName }}</span>
     </div>
-    <navigation></navigation>
+    <navigation [drawer]="drawer"></navigation>
   </mat-drawer>
 
   <div class="header">
@@ -22,5 +22,5 @@
     <router-outlet></router-outlet>
   </div>
 
-  <page-footer></page-footer>
+  <page-footer *ngIf="isLoggedIn()"></page-footer>
 </mat-drawer-container>

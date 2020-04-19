@@ -1,4 +1,4 @@
-<a routerLink="{{ navLink.url }}" href="javascript:void(0)" class="nav-link">
+<a routerLink="{{ navLink.url }}" href="javascript:void(0)" class="nav-link" [ngClass]="isActive() && 'active'">
   {{ navLink.text }}
 </a>
 

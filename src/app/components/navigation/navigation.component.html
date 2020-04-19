@@ -1,3 +1,3 @@
 <div>
-  <nav-link *ngFor="let link of navLinks" [navLink]="link"></nav-link>
+  <nav-link *ngFor="let link of navLinks" [navLink]="link" (click)="drawer.close()"></nav-link>
 </div>

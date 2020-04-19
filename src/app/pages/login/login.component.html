@@ -35,6 +35,10 @@
   <div class="form-group text-right col-12 offset-md-3 col-md-6">
     <button [disabled]="loginForm.invalid" (click)="login()" class="full-width submit" color="accent" mat-flat-button>Login <fa-icon [icon]="loginIcon"></fa-icon></button>
   </div>
+
+  <div class="text-center alternative-link-container">
+    <a routerLink="/signup" class="alternative-link">New to MoneyShare? Sign up</a>
+  </div>
 </form>
 
 <spinner [text]="'Logging In...'" name="spinner"></spinner>

@@ -78,6 +78,10 @@
   <div class="text-right col-12 offset-md-3 col-md-6">
     <button color="accent" [disabled]="signUpForm.invalid" class="full-width submit" mat-flat-button>Sign Up <fa-icon [icon]="signUpIcon"></fa-icon></button>
   </div>
+
+  <div class="text-center alternative-link-container col-12">
+    <a routerLink="/login" class="alternative-link">Already have an account? Login</a>
+  </div>
 </form>
 
 <div class="signup-complete-panel" *ngIf="signUpComplete">

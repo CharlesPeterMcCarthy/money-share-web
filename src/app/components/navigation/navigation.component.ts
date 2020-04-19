@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavLink } from '../../interfaces/nav-link';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'navigation',
@@ -8,9 +9,9 @@ import { NavLink } from '../../interfaces/nav-link';
 })
 export class NavigationComponent {
 
+  @Input() public drawer: MatDrawer;
+
   public navLinks: NavLink[] = [
-    { text: 'Login', url: '/login' },
-    { text: 'Sign Up', url: '/signup' },
     { text: 'Dashboard', url: '/dashboard' },
     { text: 'Deposit', url: '/deposit' },
     { text: 'Withdraw', url: '/withdraw' },

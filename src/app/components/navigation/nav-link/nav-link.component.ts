@@ -1,17 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavLink } from '../../../interfaces/nav-link';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'nav-link',
   templateUrl: './nav-link.component.html',
   styleUrls: ['./nav-link.component.styl']
 })
-export class NavLinkComponent implements OnInit {
+export class NavLinkComponent {
 
   @Input() public navLink: NavLink;
 
-  public constructor() { }
+  public constructor(
+    private router: Router
+  ) { }
 
-  public ngOnInit(): void { }
+  public isActive = (): boolean => this.navLink.url === this.router.url;
 
 }
