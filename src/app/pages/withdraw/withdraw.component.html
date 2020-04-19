@@ -1,6 +1,6 @@
 <page-heading title="Withdraw"></page-heading>
 
-<form [formGroup]="withdrawForm" *ngIf="!(withdrawComplete$ | async)">
+<form [formGroup]="withdrawForm" *ngIf="!(withdrawComplete$ | async)" class="page-content">
   <div class="form-row">
     <mat-form-field class="full-width">
       <mat-label>Withdrawal Amount</mat-label>

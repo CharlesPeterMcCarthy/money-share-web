@@ -1,6 +1,6 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { CustomResponse } from '../../services/auth/auth.service';
-import { SendMoney } from '../actions';
+import { ResetSendMoneyData, SendMoney } from '../actions';
 import { Injectable } from '@angular/core';
 import { SendMoneyAPIService } from '../../services/api/send-money/send-money.service';
 import { Transfer, User } from '@moneyshare/common-types';
@@ -11,13 +11,15 @@ export interface SendMoneyStateModel {
   matchingUsers: Array<Partial<User>>;
 }
 
+const initialState: SendMoneyStateModel = {
+  transferComplete: false,
+  matchingUsers: []
+};
+
 @Injectable()
 @State<SendMoneyStateModel>({
   name: 'sendMoney',
-  defaults: {
-    transferComplete: false,
-    matchingUsers: []
-  }
+  defaults: initialState
 })
 export class SendMoneyState {
 
@@ -32,7 +34,7 @@ export class SendMoneyState {
 
     const transfer: Partial<Transfer> = {
       amount: action.amount,
-      message: 'test',
+      message: action.message,
       recipientUserId: action.recipientId
     };
 
@@ -44,6 +46,11 @@ export class SendMoneyState {
       ...state,
       transferComplete: res.success
     });
+  }
+
+  @Action(ResetSendMoneyData)
+  public resetSendMoneyData(ctx: StateContext<SendMoneyStateModel>, action: ResetSendMoneyData): void {
+    ctx.setState(initialState);
   }
 
 }

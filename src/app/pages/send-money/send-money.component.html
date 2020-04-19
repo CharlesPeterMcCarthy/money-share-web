@@ -1,7 +1,7 @@
 <page-heading title="Send Money to a Friend" *ngIf="!(transferComplete$ | async)"></page-heading>
 <page-heading title="Money Sent" *ngIf="transferComplete$ | async"></page-heading>
 
-<div *ngIf="transferComplete$ | async" class="text-center">
+<div *ngIf="transferComplete$ | async" class="text-center page-content">
   <div class="icon-container">
     <fa-icon [icon]="transferCompleteIcon" class="transfer-complete-icon"></fa-icon>
   </div>

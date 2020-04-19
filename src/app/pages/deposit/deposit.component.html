@@ -1,6 +1,6 @@
 <page-heading title="Deposit"></page-heading>
 
-<form [formGroup]="depositForm" *ngIf="!(paymentComplete$ | async)">
+<form [formGroup]="depositForm" *ngIf="!(paymentComplete$ | async)" class="page-content">
   <div class="form-row">
     <mat-form-field class="full-width">
       <mat-label>Deposit Amount</mat-label>

@@ -2,7 +2,7 @@
 <page-heading title="Edit Profile" *ngIf="isMyProfile && editProfile"></page-heading>
 <page-heading title="View Profile" *ngIf="!isMyProfile && !editProfile"></page-heading>
 
-<div class="profile content-panel">
+<div class="profile content-panel page-content">
   <view-profile *ngIf="!editProfile && (profile$ | async)" [profile]="profile$ | async" [isMyProfile]="isMyProfile"></view-profile>
   <edit-profile *ngIf="editProfile && (profile$ | async)" [profile]="profile$ | async"></edit-profile>
 </div>

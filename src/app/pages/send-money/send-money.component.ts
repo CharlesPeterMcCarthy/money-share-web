@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { SendMoneyState, SendMoneyStateModel } from '../../ngxs/states';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NOTYF } from '../../utils/notyf.token';
 import { Notyf } from 'notyf';
-import { GetUser, SendMoney } from '../../ngxs/actions';
+import { GetUser, ResetSendMoneyData, SendMoney } from '../../ngxs/actions';
 import { withLatestFrom } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { UserSearchDialogComponent } from '../../components/user-search-dialog/user-search-dialog.component';
@@ -19,7 +19,7 @@ import { User, UserBrief } from '@moneyshare/common-types';
   templateUrl: './send-money.component.html',
   styleUrls: ['./send-money.component.styl']
 })
-export class SendMoneyComponent implements OnInit {
+export class SendMoneyComponent implements OnInit, OnDestroy {
 
   @Select(SendMoneyState) public sendMoneyState$: Observable<any>;
   @Select(State => State.sendMoney.transferComplete) public transferComplete$: Observable<boolean>;
@@ -34,7 +34,7 @@ export class SendMoneyComponent implements OnInit {
     private _store: Store,
     private _spinner: NgxSpinnerService,
     private _fb: FormBuilder,
-    private dialog: MatDialog,
+    private _dialog: MatDialog,
     @Inject(NOTYF) private _notyf: Notyf
   ) { }
 
@@ -56,13 +56,17 @@ export class SendMoneyComponent implements OnInit {
     });
   }
 
+  public ngOnDestroy(): void {
+    this._store.dispatch(new ResetSendMoneyData()); // Reset data when navigating away
+  }
+
   public get amount(): AbstractControl { return this.amountForm.get('amount'); }
   public get message(): AbstractControl { return this.messageForm.get('message'); }
   public get recipient(): AbstractControl { return this.recipientForm.get('recipient'); }
   public get recipientUser(): User { return this.recipient.value; }
 
   public openRecipientSearchDialog = (): void => {
-    const dialogRef = this.dialog.open(UserSearchDialogComponent, {
+    const dialogRef = this._dialog.open(UserSearchDialogComponent, {
       width: '80%',
       maxWidth: '800px',
       data: { user: this.recipient }
@@ -89,7 +93,7 @@ export class SendMoneyComponent implements OnInit {
     if (!this.recipient.value) return;
 
     this._store
-      .dispatch(new SendMoney(amount, this.recipient.value.userId))
+      .dispatch(new SendMoney(amount, this.recipientUser.userId, this.message.value))
       .pipe(withLatestFrom(this.sendMoneyState$))
       .subscribe(async ([ _, sendMoney ]: SendMoneyStateModel[]) => {
         console.log(_);

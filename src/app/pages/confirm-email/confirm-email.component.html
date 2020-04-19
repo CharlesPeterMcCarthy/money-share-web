@@ -3,7 +3,7 @@
 <page-heading title="Unable To Confirm Email" *ngIf="error && !requestedCode"></page-heading>
 <page-heading title="Check Your Email" *ngIf="requestedCode"></page-heading>
 
-<div *ngIf="!requestedCode" class="content-panel">
+<div *ngIf="!requestedCode" class="content-panel page-content">
   <div *ngIf="isConfirmed" class="text-center">
     <img src="../../../assets/svg/email-confirmed.svg">
     <p>
