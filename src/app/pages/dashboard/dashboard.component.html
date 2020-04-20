@@ -1,5 +1,33 @@
 <page-heading title="Dashboard"></page-heading>
 
 <div class="page-content">
+  <div class="top-row">
+    <div class="balance-section section">
+      <h2>Balance</h2>
 
+      <div class="balance-text-container">
+        <span *ngIf="user$ | async" class="balance-text" (click)="moneyOptions()">{{ (user$ | async).accountBalance | money }}</span>
+      </div>
+
+      <div>
+        <button color="accent" (click)="moneyOptions()" mat-flat-button>Options</button>
+      </div>
+    </div>
+
+    <div class="graph-section section">
+      <div id="chart-container" style="height: 370px; width: 100%;"></div>
+    </div>
+  </div>
+
+  <mat-divider class="divider"></mat-divider>
+
+  <div class="transactions-preview section">
+    <div class="transactions-title">
+      <h2>Recent Transactions</h2>
+      <button color="accent" routerLink="/transactions" mat-flat-button>View More</button>
+    </div>
+    <transaction *ngFor="let transaction of transactions$ | async" [transaction]="transaction">
+      {{ transaction.transactionId }} - {{ transaction.amount }}
+    </transaction>
+  </div>
 </div>

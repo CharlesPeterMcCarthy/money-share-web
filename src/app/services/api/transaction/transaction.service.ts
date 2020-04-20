@@ -16,4 +16,10 @@ export class TransactionAPIService {
   public GetAll = (lastEvaluatedKey?: LastEvaluatedKey): Promise<CustomResponse> =>
     API.post(this._api.name, '/transaction/all', { body: { lastEvaluatedKey } }).catch(this._api.handleError);
 
+  public GetPreview = (): Promise<CustomResponse> =>
+    API.get(this._api.name, '/transaction/preview', '').catch(this._api.handleError);
+
+  public GetGraphData = (): Promise<CustomResponse> =>
+    API.get(this._api.name, '/transaction/graph-data', '').catch(this._api.handleError);
+
 }

@@ -63,6 +63,7 @@ import {
 } from './ngxs/states';
 import { UserSearchDialogComponent } from './components/user-search-dialog/user-search-dialog.component';
 import { UserSearchDialogState } from './ngxs/states/user-search-dialog.state';
+import { DashboardState } from './ngxs/states/dashboard.state';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { UserSearchDialogState } from './ngxs/states/user-search-dialog.state';
       TransactionState,
       SendMoneyState,
       ProfileState,
-      UserSearchDialogState
+      UserSearchDialogState,
+      DashboardState
     ], {
       developmentMode: true
     }),
