@@ -50,6 +50,7 @@ import { EditProfileComponent } from './components/profile/edit-profile/edit-pro
 import { MoneyBottomSheetComponent } from './components/money-bottom-sheet/money-bottom-sheet.component';
 import { PageFooterComponent } from './components/page-footer/page-footer.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
+import { DepositCardComponent } from './components/deposit/deposit.component';
 
 import {
   LoginState,
@@ -59,10 +60,11 @@ import {
   DepositState,
   TransactionState,
   WithdrawState,
-  SendMoneyState, ProfileState
+  SendMoneyState,
+  ProfileState,
+  UserSearchDialogState
 } from './ngxs/states';
 import { UserSearchDialogComponent } from './components/user-search-dialog/user-search-dialog.component';
-import { UserSearchDialogState } from './ngxs/states/user-search-dialog.state';
 import { DashboardState } from './ngxs/states/dashboard.state';
 
 @NgModule({
@@ -90,7 +92,8 @@ import { DashboardState } from './ngxs/states/dashboard.state';
     MoneyBottomSheetComponent,
     PageFooterComponent,
     UserItemComponent,
-    UserSearchDialogComponent
+    UserSearchDialogComponent,
+    DepositCardComponent
   ],
   imports: [
     BrowserModule,

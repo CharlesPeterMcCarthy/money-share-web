@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Select, Store } from '@ngxs/store';
 import { DepositState, DepositStateModel } from '../../ngxs/states';
 import { Observable } from 'rxjs';
-import { BeginDeposit, CompleteDeposit, GetUser } from '../../ngxs/actions';
+import { BeginDeposit, CompleteDeposit, GetAllTransactions, GetDeposits, GetUser } from '../../ngxs/actions';
 import { withLatestFrom } from 'rxjs/operators';
 import { NOTYF } from '../../utils/notyf.token';
 import { Notyf } from 'notyf';
@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Deposit } from '@moneyshare/common-types';
 
 @Component({
   selector: 'app-deposit',
@@ -22,6 +23,8 @@ export class DepositComponent implements OnInit {
 
   @Select(DepositState) public depositState$: Observable<any>;
   @Select(State => State.deposit.paymentComplete) public paymentComplete$: Observable<boolean>;
+  @Select(State => State.deposit.deposits) public deposits$: Observable<Deposit[]>;
+  @Select((State) => State.deposit.canLoadMore) public canLoadMore$: Observable<boolean>;
 
   public depositForm: FormGroup;
 
@@ -74,6 +77,8 @@ export class DepositComponent implements OnInit {
     this.card.on('change', (event: StripeCardElementChangeEvent) => {
       this.cardErrors = event.error ? event.error.message : '';
     });
+
+    this._store.dispatch(new GetDeposits(true));
   }
 
   public get amount(): AbstractControl { return this.depositForm.get('amount'); }
@@ -120,6 +125,13 @@ export class DepositComponent implements OnInit {
 
         this._store.dispatch(new GetUser()); // Update balance on header bar
       });
+  }
+
+  public loadMore = async (): Promise<void> => {
+    await this._spinner.show('spinner');
+    this._store.dispatch(new GetDeposits(false)).subscribe(async () => {
+      await this._spinner.hide('spinner');
+    });
   }
 
 }

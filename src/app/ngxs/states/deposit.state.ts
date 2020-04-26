@@ -1,12 +1,16 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { CustomResponse } from '../../services/auth/auth.service';
-import { BeginDeposit, CompleteDeposit } from '../actions';
+import { BeginDeposit, CompleteDeposit, GetDeposits } from '../actions';
 import { Injectable } from '@angular/core';
 import { DepositAPIService } from '../../services/api/deposit/deposit.service';
+import { Deposit, LastEvaluatedKey } from '@moneyshare/common-types';
 
 export interface DepositStateModel {
   clientSecret?: string;
   paymentComplete: boolean;
+  lastEvaluatedKey?: LastEvaluatedKey;
+  deposits: Deposit[];
+  canLoadMore: boolean;
 }
 
 @Injectable()
@@ -14,7 +18,9 @@ export interface DepositStateModel {
   name: 'deposit',
   defaults: {
     clientSecret: undefined,
-    paymentComplete: false
+    paymentComplete: false,
+    deposits: [],
+    canLoadMore: false
   }
 })
 export class DepositState {
@@ -45,6 +51,20 @@ export class DepositState {
       ...state,
       paymentComplete: res.success,
       clientSecret: undefined
+    });
+  }
+
+  @Action(GetDeposits)
+  public async getDeposits(ctx: StateContext<DepositStateModel>, action: GetDeposits): Promise<void> {
+    const state = ctx.getState();
+    const res: CustomResponse = await this._depositApi.GetAll(action.isFirstLoad ?  undefined : state.lastEvaluatedKey);
+
+    console.log(res);
+    ctx.setState({
+      ...state,
+      deposits: action.isFirstLoad ? res.deposits : [ ...state.deposits, ...res.deposits ],
+      lastEvaluatedKey: res.lastEvaluatedKey,
+      canLoadMore: !!res.lastEvaluatedKey
     });
   }
 

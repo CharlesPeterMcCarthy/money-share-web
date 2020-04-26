@@ -1,0 +1,8 @@
+<div class="custom-card">
+  <div class="deposit-amount">
+    <span class="amount-detail">{{ deposit.amount | money }}</span>
+  </div>
+  <div class="deposit-text">
+    <p class="time">{{ deposit.times.createdAt | timeSince }}</p>
+  </div>
+</div>

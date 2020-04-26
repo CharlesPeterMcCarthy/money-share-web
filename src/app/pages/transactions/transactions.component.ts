@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { GetAllTransactions } from '../../ngxs/actions';
 import { Transaction } from '@moneyshare/common-types';
-import { Dispatch } from '@ngxs-labs/dispatch-decorator';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-transactions',
@@ -14,18 +14,24 @@ export class TransactionsComponent implements OnInit {
 
   @Select((State) => State.transaction.transactions) public transactions$: Observable<Transaction[]>;
   @Select((State) => State.transaction.canLoadMore) public canLoadMore$: Observable<boolean>;
-  @Dispatch() private getAllTransactions = (isFirstLoad: boolean): GetAllTransactions => new GetAllTransactions(isFirstLoad);
 
   public constructor(
-    private _store: Store
+    private _store: Store,
+    private _spinner: NgxSpinnerService
   ) { }
 
-  public ngOnInit(): void {
-    this.getAllTransactions(true);
+  public async ngOnInit(): Promise<void> {
+    await this._spinner.show('spinner');
+    this._store.dispatch(new GetAllTransactions(true)).subscribe(async () => {
+      await this._spinner.hide('spinner');
+    });
   }
 
-  public loadMore = (): void => {
-    this.getAllTransactions(false);
+  public loadMore = async (): Promise<void> => {
+    await this._spinner.show('spinner');
+    this._store.dispatch(new GetAllTransactions(false)).subscribe(async () => {
+      await this._spinner.hide('spinner');
+    });
   }
 
 }

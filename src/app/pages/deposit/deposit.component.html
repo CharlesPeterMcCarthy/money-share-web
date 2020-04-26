@@ -1,39 +1,55 @@
 <page-heading title="Deposit"></page-heading>
 
-<form [formGroup]="depositForm" *ngIf="!(paymentComplete$ | async)" class="page-content">
-  <div class="form-row">
-    <mat-form-field class="full-width">
-      <mat-label>Deposit Amount</mat-label>
-      <input type="number" id="amount" formControlName="amount" step="0.01" value="10" matInput>
-    </mat-form-field>
+<div class="page-content">
+  <form [formGroup]="depositForm" *ngIf="!(paymentComplete$ | async)">
+    <div class="form-row">
+      <mat-form-field class="full-width">
+        <mat-label>Deposit Amount</mat-label>
+        <input type="number" id="amount" formControlName="amount" step="0.01" value="10" matInput>
+      </mat-form-field>
 
-    <p class="error-text" *ngIf="amountErrors">{{ amountErrors }}</p>
-  </div>
-
-  <div class="form-row">
-    <label for="card-element">
-      Credit or debit card
-    </label>
-    <div id="card-element">
-      <!-- A Stripe Element will be inserted here. -->
+      <p class="error-text" *ngIf="amountErrors">{{ amountErrors }}</p>
     </div>
 
-    <p class="error-text" *ngIf="cardErrors">{{ cardErrors }}</p>
+    <div class="form-row">
+      <label for="card-element">
+        Credit or debit card
+      </label>
+      <div id="card-element">
+        <!-- A Stripe Element will be inserted here. -->
+      </div>
+
+      <p class="error-text" *ngIf="cardErrors">{{ cardErrors }}</p>
+    </div>
+
+    <div class="text-right">
+      <button color="accent" (click)="submit()" mat-flat-button>Deposit Money</button>
+    </div>
+  </form>
+
+  <div *ngIf="!(paymentComplete$ | async)">
+    <h2>Your Previous Deposits</h2>
+
+    <deposit-card *ngFor="let deposit of deposits$ | async" [deposit]="deposit"></deposit-card>
+
+    <div class="text-center" *ngIf="canLoadMore$ | async">
+      <button (click)="loadMore()" color="accent" mat-flat-button>Load More</button>
+    </div>
+
+    <div class="text-center no-more-deposits" *ngIf="!(canLoadMore$ | async)">
+      There are no more previous deposits.
+    </div>
   </div>
 
-  <div class="text-right">
-    <button color="accent" (click)="submit()" mat-flat-button>Deposit Money</button>
-  </div>
-</form>
-
-<div *ngIf="paymentComplete$ | async" class="text-center">
-  <div class="icon-container">
-    <fa-icon [icon]="depositCompleteIcon" class="deposit-complete-icon"></fa-icon>
-  </div>
-  <p>Your payment has been processed.</p>
-  <p>Your account balance has been updated.</p>
-  <div>
-    <img src="../../../assets/svg/savings.svg">
+  <div *ngIf="paymentComplete$ | async" class="text-center">
+    <div class="icon-container">
+      <fa-icon [icon]="depositCompleteIcon" class="deposit-complete-icon"></fa-icon>
+    </div>
+    <p>Your payment has been processed.</p>
+    <p>Your account balance has been updated.</p>
+    <div>
+      <img src="../../../assets/svg/savings.svg">
+    </div>
   </div>
 </div>
 
