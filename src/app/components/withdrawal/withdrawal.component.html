@@ -1,0 +1,8 @@
+<div class="custom-card">
+  <div class="withdraw-amount">
+    <span class="amount-detail">{{ withdraw.amount | money }}</span>
+  </div>
+  <div class="withdraw-text">
+    <p class="time">{{ withdraw.times.createdAt | timeSince }}</p>
+  </div>
+</div>

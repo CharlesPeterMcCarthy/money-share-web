@@ -7,7 +7,8 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NOTYF } from '../../utils/notyf.token';
 import { Notyf } from 'notyf';
-import { GetUser, WithdrawMoney } from '../../ngxs/actions';
+import { GetDeposits, GetUser, GetWithdrawals, ResetDepositForm, ResetWithdrawForm, WithdrawMoney } from '../../ngxs/actions';
+import { Withdrawal } from '@moneyshare/common-types';
 
 @Component({
   selector: 'app-withdraw',
@@ -17,6 +18,8 @@ import { GetUser, WithdrawMoney } from '../../ngxs/actions';
 export class WithdrawComponent implements OnInit {
 
   @Select(State => State.withdraw.withdrawComplete) public withdrawComplete$: Observable<boolean>;
+  @Select(State => State.withdraw.withdrawals) public withdrawals$: Observable<Withdrawal[]>;
+  @Select(State => State.withdraw.canLoadMore) public canLoadMore$: Observable<boolean>;
 
   public withdrawForm: FormGroup;
   public amountErrors: string;
@@ -38,6 +41,8 @@ export class WithdrawComponent implements OnInit {
         Validators.min(5)
       ] ]
     });
+
+    this._store.dispatch(new GetWithdrawals(true));
   }
 
   public get amount(): AbstractControl { return this.withdrawForm.get('amount'); }
@@ -52,6 +57,22 @@ export class WithdrawComponent implements OnInit {
       await this._spinner.hide('spinner');
       this._store.dispatch(new GetUser()); // Update balance on header bar
     });
+  }
+
+  public loadMore = async (): Promise<void> => {
+    await this._spinner.show('spinner');
+    this._store.dispatch(new GetWithdrawals(false)).subscribe(async () => {
+      await this._spinner.hide('spinner');
+    });
+  }
+
+  public refresh = (): void => {
+    this._store.dispatch(new ResetWithdrawForm())
+      .subscribe(() => {
+        this._store.dispatch(new GetWithdrawals(true));
+        this.withdrawForm.reset();
+        this.amount.setValue(10);
+      });
   }
 
 }

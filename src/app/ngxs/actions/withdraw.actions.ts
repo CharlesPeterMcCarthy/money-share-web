@@ -7,3 +7,19 @@ export class WithdrawMoney {
   ) { }
 
 }
+
+export class GetWithdrawals {
+
+  public static readonly type: string = '[Withdraw Page] Get Withdrawals';
+
+  public constructor(
+    public isFirstLoad: boolean
+  ) { }
+
+}
+
+export class ResetWithdrawForm {
+
+  public static readonly type: string = '[Withdraw Page] Reset Withdraw Form';
+
+}

@@ -67,7 +67,7 @@ export class DepositComponent implements OnInit, OnDestroy {
     this._store.dispatch(new ResetDepositData()); // Reset data when navigating away
   }
 
-  private setupStripeInput = async (): Promise<void> => {
+  private setupStripeInput = (): void => {
     const style = {
       base: {
         color: '#32325d',
@@ -150,6 +150,9 @@ export class DepositComponent implements OnInit, OnDestroy {
   public refresh = (): void => {
     this._store.dispatch(new ResetDepositForm())
       .subscribe(() => {
+        this._store.dispatch(new GetDeposits(true));
+        this.depositForm.reset();
+        this.amount.setValue(10);
         setTimeout(async () => await this.setupStripeInput());
       });
   }

@@ -66,6 +66,7 @@ import {
 } from './ngxs/states';
 import { UserSearchDialogComponent } from './components/user-search-dialog/user-search-dialog.component';
 import { DashboardState } from './ngxs/states/dashboard.state';
+import { WithdrawalCardComponent } from './components/withdrawal/withdrawal.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { DashboardState } from './ngxs/states/dashboard.state';
     PageFooterComponent,
     UserItemComponent,
     UserSearchDialogComponent,
-    DepositCardComponent
+    DepositCardComponent,
+    WithdrawalCardComponent
   ],
   imports: [
     BrowserModule,
