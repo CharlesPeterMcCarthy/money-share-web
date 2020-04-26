@@ -1,10 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { loadStripe, PaymentIntent, Stripe, StripeCardElement, StripeCardElementChangeEvent, StripeError, Token } from '@stripe/stripe-js';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { loadStripe, PaymentIntent, Stripe, StripeCardElement, StripeCardElementChangeEvent, StripeError } from '@stripe/stripe-js';
 import { environment } from '../../../environments/environment';
 import { Select, Store } from '@ngxs/store';
 import { DepositState, DepositStateModel } from '../../ngxs/states';
 import { Observable } from 'rxjs';
-import { BeginDeposit, CompleteDeposit, GetAllTransactions, GetDeposits, GetUser } from '../../ngxs/actions';
+import {
+  BeginDeposit,
+  CompleteDeposit,
+  GetDeposits,
+  GetUser,
+  ResetDepositData, ResetDepositForm,
+} from '../../ngxs/actions';
 import { withLatestFrom } from 'rxjs/operators';
 import { NOTYF } from '../../utils/notyf.token';
 import { Notyf } from 'notyf';
@@ -19,7 +25,7 @@ import { Deposit } from '@moneyshare/common-types';
   templateUrl: './deposit.component.html',
   styleUrls: ['./deposit.component.styl']
 })
-export class DepositComponent implements OnInit {
+export class DepositComponent implements OnInit, OnDestroy {
 
   @Select(DepositState) public depositState$: Observable<any>;
   @Select(State => State.deposit.paymentComplete) public paymentComplete$: Observable<boolean>;
@@ -52,7 +58,16 @@ export class DepositComponent implements OnInit {
     });
 
     this.stripe = await loadStripe(environment.stripeAPIKey);
+    this.setupStripeInput();
 
+    this._store.dispatch(new GetDeposits(true));
+  }
+
+  public ngOnDestroy(): void {
+    this._store.dispatch(new ResetDepositData()); // Reset data when navigating away
+  }
+
+  private setupStripeInput = async (): Promise<void> => {
     const style = {
       base: {
         color: '#32325d',
@@ -77,8 +92,6 @@ export class DepositComponent implements OnInit {
     this.card.on('change', (event: StripeCardElementChangeEvent) => {
       this.cardErrors = event.error ? event.error.message : '';
     });
-
-    this._store.dispatch(new GetDeposits(true));
   }
 
   public get amount(): AbstractControl { return this.depositForm.get('amount'); }
@@ -132,6 +145,13 @@ export class DepositComponent implements OnInit {
     this._store.dispatch(new GetDeposits(false)).subscribe(async () => {
       await this._spinner.hide('spinner');
     });
+  }
+
+  public refresh = (): void => {
+    this._store.dispatch(new ResetDepositForm())
+      .subscribe(() => {
+        setTimeout(async () => await this.setupStripeInput());
+      });
   }
 
 }

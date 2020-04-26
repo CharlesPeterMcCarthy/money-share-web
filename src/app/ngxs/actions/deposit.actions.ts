@@ -23,3 +23,15 @@ export class GetDeposits {
   ) { }
 
 }
+
+export class ResetDepositData {
+
+  public static readonly type: string = '[Deposit Page] Reset Deposit Data';
+
+}
+
+export class ResetDepositForm {
+
+  public static readonly type: string = '[Deposit Page] Reset Deposit Form';
+
+}

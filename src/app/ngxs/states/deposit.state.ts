@@ -1,6 +1,6 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { CustomResponse } from '../../services/auth/auth.service';
-import { BeginDeposit, CompleteDeposit, GetDeposits } from '../actions';
+import { BeginDeposit, CompleteDeposit, GetDeposits, ResetDepositData, ResetDepositForm } from '../actions';
 import { Injectable } from '@angular/core';
 import { DepositAPIService } from '../../services/api/deposit/deposit.service';
 import { Deposit, LastEvaluatedKey } from '@moneyshare/common-types';
@@ -13,15 +13,17 @@ export interface DepositStateModel {
   canLoadMore: boolean;
 }
 
+const initialState: DepositStateModel = {
+  clientSecret: undefined,
+  paymentComplete: false,
+  deposits: [],
+  canLoadMore: false
+};
+
 @Injectable()
 @State<DepositStateModel>({
   name: 'deposit',
-  defaults: {
-    clientSecret: undefined,
-    paymentComplete: false,
-    deposits: [],
-    canLoadMore: false
-  }
+  defaults: initialState
 })
 export class DepositState {
 
@@ -65,6 +67,21 @@ export class DepositState {
       deposits: action.isFirstLoad ? res.deposits : [ ...state.deposits, ...res.deposits ],
       lastEvaluatedKey: res.lastEvaluatedKey,
       canLoadMore: !!res.lastEvaluatedKey
+    });
+  }
+
+  @Action(ResetDepositData)
+  public resetDepositData(ctx: StateContext<DepositStateModel>, action: ResetDepositData): void {
+    ctx.setState(initialState);
+  }
+
+  @Action(ResetDepositForm)
+  public resetDepositForm(ctx: StateContext<DepositStateModel>, action: ResetDepositForm): void {
+    const state = ctx.getState();
+
+    ctx.setState({
+      ...initialState,
+      deposits: state.deposits
     });
   }
 
