@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from '@moneyshare/common-types';
 
 @Component({
@@ -6,13 +6,9 @@ import { User } from '@moneyshare/common-types';
   templateUrl: './user-item.component.html',
   styleUrls: ['./user-item.component.styl']
 })
-export class UserItemComponent implements OnInit {
+export class UserItemComponent {
 
   @Input() public user: Partial<User>;
   @Input() public showMemberSince: boolean = false;
-
-  public constructor() { }
-
-  public ngOnInit(): void { }
 
 }

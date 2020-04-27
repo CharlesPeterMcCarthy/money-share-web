@@ -36,7 +36,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private renderGraph = (dataPoints: GraphPoint[]): void => {
-    console.log(dataPoints);
     const chart = new CanvasJS.Chart('chart-container', {
       animationEnabled: true,
       theme: 'light2',

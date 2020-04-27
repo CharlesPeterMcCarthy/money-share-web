@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { faEuroSign, faArrowRight, faCommentDollar } from '@fortawesome/free-solid-svg-icons';
 import { Transaction } from '@moneyshare/common-types';
@@ -8,16 +8,12 @@ import { Transaction } from '@moneyshare/common-types';
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.styl']
 })
-export class TransactionComponent implements OnInit {
+export class TransactionComponent {
 
   @Input() public transaction: Transaction;
   public euroIcon: IconDefinition = faEuroSign;
   public arrowRightIcon: IconDefinition = faArrowRight;
   public messageIcon: IconDefinition = faCommentDollar;
-
-  public constructor() { }
-
-  public ngOnInit(): void { }
 
   public transactionDirection = (): string => {
     switch (this.transaction.type) {
