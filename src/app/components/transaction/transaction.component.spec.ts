@@ -8,7 +8,17 @@ describe('TransactionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransactionComponent ]
+      declarations: [
+        TransactionComponent,
+        TimeSincePipe,
+        TransactionSignPipe,
+        MoneyPipe
+      ],
+      providers: [
+        TimeSincePipe,
+        TransactionSignPipe,
+        MoneyPipe
+      ]
     })
     .compileComponents();
   }));

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DepositService } from './deposit.service';
+import { DepositAPIService } from './deposit.service';
 
-describe('DepositService', () => {
-  let service: DepositService;
+describe('DepositAPIService', () => {
+  let service: DepositAPIService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(DepositService);
+    TestBed.configureTestingModule({ });
+    service = TestBed.inject(DepositAPIService);
   });
 
   it('should be created', () => {

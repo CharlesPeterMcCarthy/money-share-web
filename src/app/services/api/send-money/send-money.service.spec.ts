@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SendMoneyService } from './send-money.service';
+import { SendMoneyAPIService } from './send-money.service';
 
-describe('SendMoneyService', () => {
-  let service: SendMoneyService;
+describe('SendMoneyAPIService', () => {
+  let service: SendMoneyAPIService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(SendMoneyService);
+    TestBed.configureTestingModule({ });
+    service = TestBed.inject(SendMoneyAPIService);
   });
 
   it('should be created', () => {

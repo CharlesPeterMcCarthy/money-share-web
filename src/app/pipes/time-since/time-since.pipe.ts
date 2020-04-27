@@ -16,7 +16,7 @@ export class TimeSincePipe implements PipeTransform {
     if (days) return `${days} day${days === 1 ? '' : 's'} ago`;
     if (hours) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
     if (minutes) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
-    return `Just now`;;
+    return `Just now`;
   }
 
 }

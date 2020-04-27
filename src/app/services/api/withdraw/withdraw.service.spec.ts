@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WithdrawService } from './withdraw.service';
+import { WithdrawAPIService } from './withdraw.service';
 
-describe('WithdrawService', () => {
-  let service: WithdrawService;
+describe('WithdrawAPIService', () => {
+  let service: WithdrawAPIService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(WithdrawService);
+    TestBed.configureTestingModule({ });
+    service = TestBed.inject(WithdrawAPIService);
   });
 
   it('should be created', () => {

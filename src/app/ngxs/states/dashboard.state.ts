@@ -29,8 +29,6 @@ export class DashboardState {
     const state = ctx.getState();
     const res: CustomResponse = await this._transactionApi.GetPreview();
 
-    console.log(res);
-
     ctx.setState({
       ...state,
       transactions: res.success ? res.transactions : []
@@ -41,8 +39,6 @@ export class DashboardState {
   public async getGraphData(ctx: StateContext<DashboardStateModel>, action: GetGraphData): Promise<void> {
     const state = ctx.getState();
     const res: CustomResponse = await this._transactionApi.GetGraphData();
-
-    console.log(res);
 
     ctx.setState({
       ...state,

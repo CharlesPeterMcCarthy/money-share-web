@@ -31,8 +31,6 @@ export class DashboardComponent implements OnInit {
     });
 
     this.graphData$.subscribe((data: GraphPoint[]) => {
-      console.log(data);
-
       if (data.length) this.renderGraph(data);
     });
   }
