@@ -9,7 +9,7 @@
   <div class="header">
     <fa-icon [icon]="navIcon" class="nav-icon" (click)="drawer.toggle()" *ngIf="isLoggedIn() && !drawer.opened"></fa-icon>
     <fa-icon [icon]="closeNavIcon" class="nav-icon" (click)="drawer.toggle()" *ngIf="isLoggedIn() && drawer.opened"></fa-icon>
-    <fa-icon [icon]="signOutIcon" class="nav-icon logout" (click)="signOut()" *ngIf="isLoggedIn()"></fa-icon>
+    <fa-icon [icon]="signOutIcon" class="nav-icon logout" (click)="signOut() && drawer.close()" *ngIf="isLoggedIn()"></fa-icon>
 
     <div class="brand-name" *ngIf="!isLoggedIn()">
       MoneyShare

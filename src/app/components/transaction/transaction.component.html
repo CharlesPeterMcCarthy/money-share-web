@@ -6,6 +6,7 @@
   </div>
   <div class="transaction-text">
     <p class="text">{{ transaction.text }}</p>
+    <p class="message" *ngIf="transaction.message"><fa-icon [icon]="messageIcon"></fa-icon> {{ transaction.message }}</p>
     <p class="time">{{ transaction.times.createdAt | timeSince }}</p>
   </div>
   <div class="transaction-balance">

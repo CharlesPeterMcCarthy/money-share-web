@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { faBars, faSignOutAlt, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from './services/auth/auth.service';
@@ -11,6 +11,9 @@ import { GetUser } from './ngxs/actions';
 import { User } from '@moneyshare/common-types';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MoneyBottomSheetComponent } from './components/money-bottom-sheet/money-bottom-sheet.component';
+import { Router } from '@angular/router';
+import { NOTYF } from './utils/notyf.token';
+import { Notyf } from 'notyf';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +35,9 @@ export class AppComponent implements OnInit {
     private _auth: AuthService,
     private _userAPI: UserAPIService,
     private _store: Store,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private _router: Router,
+    @Inject(NOTYF) private _notyf: Notyf
   ) { }
 
   public async ngOnInit(): Promise<void> {
@@ -46,6 +51,8 @@ export class AppComponent implements OnInit {
 
   public signOut = async (): Promise<void> => {
     await this._auth.signOut();
+    await this._router.navigateByUrl('/');
+    this._notyf.success('You Have Successfully Signed Out');
   }
 
   public isLoggedIn = (): boolean => this._auth.isLoggedIn();

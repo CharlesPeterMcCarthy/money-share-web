@@ -21,6 +21,7 @@ export class TransactionsComponent implements OnInit {
   ) { }
 
   public async ngOnInit(): Promise<void> {
+    console.log('get');
     await this._spinner.show('spinner');
     this._store.dispatch(new GetAllTransactions(true)).subscribe(async () => {
       await this._spinner.hide('spinner');

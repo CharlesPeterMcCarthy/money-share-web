@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
-import { faEuroSign, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faEuroSign, faArrowRight, faCommentDollar } from '@fortawesome/free-solid-svg-icons';
 import { Transaction } from '@moneyshare/common-types';
 
 @Component({
@@ -13,6 +13,7 @@ export class TransactionComponent implements OnInit {
   @Input() public transaction: Transaction;
   public euroIcon: IconDefinition = faEuroSign;
   public arrowRightIcon: IconDefinition = faArrowRight;
+  public messageIcon: IconDefinition = faCommentDollar;
 
   public constructor() { }
 

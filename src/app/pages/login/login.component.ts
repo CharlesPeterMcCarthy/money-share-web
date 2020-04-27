@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
       .dispatch(new AttemptLogin(this.email.value.trim(), this.password.value.trim()))
       .pipe(withLatestFrom(this.loginState$))
       .subscribe(async ([ _, login ]: LoginStateModel[]) => {
-        if (login.isLoggedIn) await this._router.navigate([ '/' ]); // Update when dashboard is created
+        if (login.isLoggedIn) await this._router.navigateByUrl('/dashboard');
         else if (login.error) this.handleError(login.error);
 
         await this._spinner.hide('spinner');

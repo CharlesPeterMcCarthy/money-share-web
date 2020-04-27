@@ -60,7 +60,10 @@ export class DepositComponent implements OnInit, OnDestroy {
     this.stripe = await loadStripe(environment.stripeAPIKey);
     this.setupStripeInput();
 
-    this._store.dispatch(new GetDeposits(true));
+    await this._spinner.show('loading');
+    this._store.dispatch(new GetDeposits(true)).subscribe(() => {
+      this._spinner.hide('loading');
+    });
   }
 
   public ngOnDestroy(): void {
@@ -97,7 +100,7 @@ export class DepositComponent implements OnInit, OnDestroy {
   public get amount(): AbstractControl { return this.depositForm.get('amount'); }
 
   public submit = async (): Promise<void> => {
-    await this._spinner.show('spinner');
+    await this._spinner.show('action');
     this.cardErrors = '';
 
     const amount: number = this.amount.value * 100; // Convert to cent
@@ -116,7 +119,7 @@ export class DepositComponent implements OnInit, OnDestroy {
             card: this.card
           }
         }).then(async (result: { paymentIntent: PaymentIntent; error: StripeError }) => {
-          await this._spinner.hide('spinner');
+          await this._spinner.hide('action');
 
           if (result.error) {
             this._notyf.error(result.error.message);
@@ -141,9 +144,9 @@ export class DepositComponent implements OnInit, OnDestroy {
   }
 
   public loadMore = async (): Promise<void> => {
-    await this._spinner.show('spinner');
+    await this._spinner.show('loading');
     this._store.dispatch(new GetDeposits(false)).subscribe(async () => {
-      await this._spinner.hide('spinner');
+      await this._spinner.hide('loading');
     });
   }
 

@@ -1,13 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NOTYF } from '../../utils/notyf.token';
-import { Notyf } from 'notyf';
-import { GetDeposits, GetUser, GetWithdrawals, ResetDepositForm, ResetWithdrawForm, WithdrawMoney } from '../../ngxs/actions';
+import { GetUser, GetWithdrawals, ResetWithdrawForm, WithdrawMoney } from '../../ngxs/actions';
 import { Withdrawal } from '@moneyshare/common-types';
 
 @Component({
@@ -28,41 +26,43 @@ export class WithdrawComponent implements OnInit {
   public constructor(
     private _store: Store,
     private _spinner: NgxSpinnerService,
-    private _fb: FormBuilder,
-    @Inject(NOTYF) private _notyf: Notyf
+    private _fb: FormBuilder
   ) { }
 
-  public ngOnInit(): void {
+  public async ngOnInit(): Promise<void> {
     this.withdrawForm = this._fb.group({
-      amount: [ 10, [
+      amount: [10, [
         Validators.required,
         Validators.pattern('^(?!0\\.00)\\d{1,3}(,\\d{3})*(\\.\\d\\d)?$'),
         Validators.max(350),
         Validators.min(5)
-      ] ]
+      ]]
     });
 
-    this._store.dispatch(new GetWithdrawals(true));
+    await this._spinner.show('loading');
+    this._store.dispatch(new GetWithdrawals(true)).subscribe(() => {
+      this._spinner.hide('loading');
+    });
   }
 
   public get amount(): AbstractControl { return this.withdrawForm.get('amount'); }
 
   public submit = async (): Promise<void> => {
-    await this._spinner.show('spinner');
+    await this._spinner.show('action');
 
     const amount: number = this.amount.value * 100; // Convert to cent
     if (amount < 1000 || amount > 50000) return;
 
     this._store.dispatch(new WithdrawMoney(amount)).subscribe(async () => {
-      await this._spinner.hide('spinner');
+      await this._spinner.hide('action');
       this._store.dispatch(new GetUser()); // Update balance on header bar
     });
   }
 
   public loadMore = async (): Promise<void> => {
-    await this._spinner.show('spinner');
+    await this._spinner.show('loading');
     this._store.dispatch(new GetWithdrawals(false)).subscribe(async () => {
-      await this._spinner.hide('spinner');
+      await this._spinner.hide('loading');
     });
   }
 
