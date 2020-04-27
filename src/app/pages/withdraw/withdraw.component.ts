@@ -7,6 +7,8 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GetUser, GetWithdrawals, ResetWithdrawForm, WithdrawMoney } from '../../ngxs/actions';
 import { Withdrawal } from '@moneyshare/common-types';
+import { Title } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-withdraw',
@@ -24,12 +26,15 @@ export class WithdrawComponent implements OnInit {
   public withdrawCompleteIcon: IconDefinition = faCheck;
 
   public constructor(
+    private _title: Title,
     private _store: Store,
     private _spinner: NgxSpinnerService,
     private _fb: FormBuilder
   ) { }
 
   public async ngOnInit(): Promise<void> {
+    this._title.setTitle(`Withdraw | ${environment.brand}`);
+
     this.withdrawForm = this._fb.group({
       amount: [10, [
         Validators.required,

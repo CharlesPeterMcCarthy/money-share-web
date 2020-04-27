@@ -11,6 +11,7 @@ import { Notyf } from 'notyf';
 import { EditProfile } from '../../../ngxs/actions';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Store } from '@ngxs/store';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'edit-profile',
@@ -33,7 +34,7 @@ export class EditProfileComponent implements OnInit {
     private _store: Store,
     @Inject(NOTYF) private _notyf: Notyf
   ) {
-    this._title.setTitle('Edit Profile | InstaKilo');
+    this._title.setTitle(`Edit Profile | ${environment.brand}`);
   }
 
   public ngOnInit(): void {

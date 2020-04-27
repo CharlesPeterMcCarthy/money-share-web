@@ -5,6 +5,8 @@ import { Notyf } from 'notyf';
 import { AmplifyService } from 'aws-amplify-angular';
 import { AuthState } from 'aws-amplify-angular/src/providers/auth.state';
 import { UtilsService } from '../utils/utils.service';
+import { GetUser } from '../../ngxs/actions';
+import { Store } from '@ngxs/store';
 
 export interface CustomAuthError {
   code: string;
@@ -36,6 +38,7 @@ export class AuthService {
   public constructor(
     private _amplifyService: AmplifyService,
     private _uilts: UtilsService,
+    private _store: Store,
     @Inject(NOTYF) private notyf: Notyf
   ) {
     this._amplifyService.authStateChange$ // Listening for auth state changes
@@ -112,6 +115,9 @@ export class AuthService {
   public login = async (email: string, password: string): Promise<CustomResponse> => {
     try {
       await this.Auth.signIn(email, password);
+
+      this._store.dispatch(new GetUser());
+
       return { success: true };
     } catch (e) {
       return { error: e, success: false };

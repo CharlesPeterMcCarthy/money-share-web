@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { GetAllTransactions } from '../../ngxs/actions';
 import { Transaction } from '@moneyshare/common-types';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Title } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-transactions',
@@ -16,12 +18,14 @@ export class TransactionsComponent implements OnInit {
   @Select((State) => State.transaction.canLoadMore) public canLoadMore$: Observable<boolean>;
 
   public constructor(
+    private _title: Title,
     private _store: Store,
     private _spinner: NgxSpinnerService
   ) { }
 
   public async ngOnInit(): Promise<void> {
-    console.log('get');
+    this._title.setTitle(`Transactions | ${environment.brand}`);
+
     await this._spinner.show('spinner');
     this._store.dispatch(new GetAllTransactions(true)).subscribe(async () => {
       await this._spinner.hide('spinner');

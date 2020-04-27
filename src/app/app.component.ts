@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     this._title.setTitle(environment.brand);
     await this._auth.checkUserAuthenticated();
 
-    this._store.dispatch(new GetUser());
+    if (this.isLoggedIn()) this._store.dispatch(new GetUser());
 
     this.userState$.subscribe((userState: UserStateModel) => this.user = userState.user);
   }

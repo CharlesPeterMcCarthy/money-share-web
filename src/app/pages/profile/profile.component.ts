@@ -8,6 +8,7 @@ import { Notyf } from 'notyf';
 import { GetMyProfile, GetOtherProfile } from '../../ngxs/actions';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +23,7 @@ export class ProfileComponent implements OnInit {
   public editProfile: boolean = false;
 
   public constructor(
+    private _title: Title,
     private route: ActivatedRoute,
     private _userApi: UserAPIService,
     private _spinner: NgxSpinnerService,
@@ -38,25 +40,8 @@ export class ProfileComponent implements OnInit {
 
     await this._spinner.show('spinner');
 
-    if (userId) {
-      // this._userApi.getOtherUserProfile(userId).subscribe(async (res: OtherProfileResponse) => {
-      //   if (res.success && res.profile) this.profile = res.profile;
-      //   else this._notyf.error('Unable to retrieve user profile');
-      //
-      //   await this._spinner.hide('spinner');
-      // });
-
-      this._store.dispatch(new GetOtherProfile(userId)).subscribe(() => this._spinner.hide('spinner'));
-    } else {
-      // this._userApi.getMyProfile().subscribe(async (res: MyProfileResponse) => {
-      //   if (res.success && res.profile) this.profile = res.profile;
-      //   else this._notyf.error('Unable to retrieve your profile');
-      //
-      //   await this._spinner.hide('spinner');
-      // });
-
-      this._store.dispatch(new GetMyProfile()).subscribe(() => this._spinner.hide('spinner'));
-    }
+    if (userId) this._store.dispatch(new GetOtherProfile(userId)).subscribe(() => this._spinner.hide('spinner'));
+    else this._store.dispatch(new GetMyProfile()).subscribe(() => this._spinner.hide('spinner'));
   }
 
 }

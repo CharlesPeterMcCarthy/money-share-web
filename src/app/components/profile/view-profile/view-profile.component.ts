@@ -12,6 +12,7 @@ import { Store } from '@ngxs/store';
 import { S3Service } from '../../../services/s3/s3.service';
 import { Progress } from 'aws-sdk/lib/request';
 import { UpdateAvatar } from '../../../ngxs/actions';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'view-profile',
@@ -38,7 +39,7 @@ export class ViewProfileComponent implements OnInit {
 
   public ngOnInit(): void {
     this.setAvatar(this.profile.avatar);
-    this._title.setTitle(`${this.isMyProfile ? 'My Profile' : this.profile.firstName} | MoneyShare`);
+    this._title.setTitle(`${this.isMyProfile ? 'My Profile' : this.profile.firstName} | ${environment.brand}`);
 
     this.imageUploadListener();
     this.imageUploadProgressListener();

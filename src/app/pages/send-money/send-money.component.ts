@@ -13,6 +13,8 @@ import { withLatestFrom } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { UserSearchDialogComponent } from '../../components/user-search-dialog/user-search-dialog.component';
 import { User, UserBrief } from '@moneyshare/common-types';
+import { environment } from '../../../environments/environment';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-send-money',
@@ -31,6 +33,7 @@ export class SendMoneyComponent implements OnInit, OnDestroy {
   public transferCompleteIcon: IconDefinition = faCheck;
 
   public constructor(
+    private _title: Title,
     private _store: Store,
     private _spinner: NgxSpinnerService,
     private _fb: FormBuilder,
@@ -39,6 +42,8 @@ export class SendMoneyComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
+    this._title.setTitle(`Send Money | ${environment.brand}`);
+
     this.amountForm = this._fb.group({
       amount: [ 10, [
         Validators.required,

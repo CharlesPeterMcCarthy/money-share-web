@@ -19,6 +19,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Deposit } from '@moneyshare/common-types';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-deposit',
@@ -41,6 +42,7 @@ export class DepositComponent implements OnInit, OnDestroy {
   public depositCompleteIcon: IconDefinition = faCheck;
 
   public constructor(
+    private _title: Title,
     private _store: Store,
     private _spinner: NgxSpinnerService,
     private _fb: FormBuilder,
@@ -48,6 +50,8 @@ export class DepositComponent implements OnInit, OnDestroy {
   ) { }
 
   public async ngOnInit(): Promise<void> {
+    this._title.setTitle(`Deposit | ${environment.brand}`);
+
     this.depositForm = this._fb.group({
       amount: [ 10, [
         Validators.required,

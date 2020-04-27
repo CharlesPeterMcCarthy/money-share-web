@@ -7,6 +7,8 @@ import { GetGraphData, GetTransactionsPreview } from '../../ngxs/actions';
 import * as CanvasJS from '../../../lib/canvas.min';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MoneyBottomSheetComponent } from '../../components/money-bottom-sheet/money-bottom-sheet.component';
+import { environment } from '../../../environments/environment';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,11 +23,14 @@ export class DashboardComponent implements OnInit {
   @Dispatch() private getGraphData = (): GetGraphData => new GetGraphData();
 
   public constructor(
+    private _title: Title,
     private _store: Store,
     private _bottomSheet: MatBottomSheet
   ) { }
 
   public ngOnInit(): void {
+    this._title.setTitle(`Dashboard | ${environment.brand}`);
+
     this._store.dispatch(new GetTransactionsPreview()).subscribe(() => {
       this.getGraphData();
     });
