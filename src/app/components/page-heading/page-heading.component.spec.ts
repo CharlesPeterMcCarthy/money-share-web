@@ -37,4 +37,10 @@ describe('PageHeadingComponent', () => {
 
     expect(component.Title).toBe('Dashboard');
   });
+
+  it('should capitalise the first letter of every word in the title', () => {
+    component.title = 'this is a test';
+
+    expect(component.Title).toBe('This Is A Test');
+  });
 });

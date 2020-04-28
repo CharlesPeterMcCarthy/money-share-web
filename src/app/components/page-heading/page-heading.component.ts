@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'page-heading',
@@ -10,6 +9,6 @@ export class PageHeadingComponent {
 
   @Input() public title: string;
 
-  public get Title(): string { return this.title.charAt(0).toUpperCase() + this.title.slice(1).toLowerCase(); }
+  public get Title(): string { return this.title.split(' ').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' '); }
 
 }

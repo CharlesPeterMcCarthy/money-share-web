@@ -27,7 +27,7 @@
   </div>
 
   <div class="text-center no-more-withdrawals" *ngIf="!(canLoadMore$ | async)">
-    There are no more previous withdrawals.
+    {{ !!(withdrawals$ | async).length ? 'There are no more previous withdrawals.' : 'You have no previous withdrawals yet.' }}
   </div>
 </div>
 

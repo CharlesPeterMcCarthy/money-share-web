@@ -41,7 +41,7 @@
   </div>
 
   <div class="text-center no-more-deposits" *ngIf="!(canLoadMore$ | async)">
-    There are no more previous deposits.
+    {{ !!(deposits$ | async).length ? 'There are no more previous deposits.' : 'You have no previous deposits yet.' }}
   </div>
 </div>
 

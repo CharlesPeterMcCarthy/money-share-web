@@ -38,14 +38,19 @@ export class SendMoneyState {
       recipientUserId: action.recipientId
     };
 
-    const res: CustomResponse = await this._sendMoneyApi.SendMoney(transfer);
+    try {
+      const res: CustomResponse = await this._sendMoneyApi.SendMoney(transfer);
 
-    console.log(res);
-
-    ctx.setState({
-      ...state,
-      transferComplete: res.success
-    });
+      ctx.setState({
+        ...state,
+        transferComplete: res.success
+      });
+    } catch (err) {
+      ctx.setState({
+        ...state,
+        transferComplete: false
+      });
+    }
   }
 
   @Action(ResetSendMoneyData)

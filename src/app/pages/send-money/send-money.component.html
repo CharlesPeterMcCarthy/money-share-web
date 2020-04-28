@@ -23,7 +23,12 @@
       <ng-template matStepLabel>Choose a Friend</ng-template>
 
       <div *ngIf="(currentUser$ | async) && !recipientUser">
-        <p>Choose a friend from the list below or <span class="clickable-text" (click)="openRecipientSearchDialog()">search for a friend</span>.</p>
+        <p *ngIf="(currentUser$ | async).recentRecipients && (currentUser$ | async).recentRecipients.length">
+          Choose a friend from the list below or <span class="clickable-text" (click)="openRecipientSearchDialog()">search for a friend</span>.
+        </p>
+        <p *ngIf="!(currentUser$ | async).recentRecipients || !(currentUser$ | async).recentRecipients.length">
+          Click here to <span class="clickable-text" (click)="openRecipientSearchDialog()">Search for a friend</span> to send money to.
+        </p>
         <user-item *ngFor="let recent of (currentUser$ | async).recentRecipients" [user]="recent" (click)="selectRecipient(recent)"></user-item>
       </div>
 
