@@ -34,7 +34,7 @@ describe('UserItemComponent', () => {
     component.user.avatar = '';
     const compiled = fixture.debugElement.nativeElement;
 
-    expect(compiled.querySelector('img#avatar').src).toContain('assets/images/noavatar.jpg');
+    expect(compiled.querySelector('div.img-wrapper').style['background-image']).toContain('assets/images/noavatar.jpg');
   });
 
   it('should render the user full name with a space between', () => {
