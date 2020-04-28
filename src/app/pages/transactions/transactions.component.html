@@ -20,7 +20,7 @@
   <div class="text-center no-more-transactions" *ngIf="!(canLoadMore$ | async)">
     There are no more previous transactions.
 
-    <div>
+    <div *ngIf="!(transactions$ | async).length">
       <button routerLink="/dashboard" color="accent" mat-flat-button>Back to Dashboard</button>
     </div>
   </div>

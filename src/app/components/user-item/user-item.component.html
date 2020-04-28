@@ -1,6 +1,8 @@
 <div class="user-item">
   <div class="avatar">
-    <img src="{{ user.avatar || './assets/images/noavatar.jpg' }}" id="avatar" />
+<!--    <img src="{{ user.avatar || './assets/images/noavatar.jpg' }}" id="avatar" />-->
+    <div class="img-wrapper" [style.background-image]="avatar">
+    </div>
   </div>
   <div class="name">
     {{ user.firstName }} {{ user.lastName }}
